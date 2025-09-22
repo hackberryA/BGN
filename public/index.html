@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>WebSocket Test</title>
+</head>
+<body>
+  <h1>WebSocket テスト</h1>
+  <input id="msg" type="text" placeholder="メッセージ送信">
+  <button onclick="send()">送信</button>
+  <pre id="log"></pre>
+
+  <script>
+    const ws = new WebSocket(`wss://${location.host}`);
+
+    ws.onmessage = (event) => {
+      document.getElementById("log").textContent += event.data + "\n";
+    };
+
+    function send() {
+      const val = document.getElementById("msg").value;
+      ws.send(val);
+    }
+  </script>
+</body>
+</html>
