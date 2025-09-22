@@ -5,9 +5,15 @@
   <title>Board Game</title>
 </head>
 <body>
-  <h1>同期型ボードゲーム</h1>
-  <canvas id="canvas"></canvas>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js"></script>
-  <script src="client.js"></script>
+    <script type="importmap">
+			{
+				"imports": {
+					"three": "https://cdn.jsdelivr.net/npm/three@0.180/build/three.module.js"
+				}
+			}
+    </script>
+    <script type="module" src="./client.js"></script>
+    <h1>ばびろん</h1>
+    <canvas id="canvas"></canvas>
 </body>
 </html>
