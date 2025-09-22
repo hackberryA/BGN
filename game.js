@@ -1,5 +1,5 @@
 let gameState = {
-  objects: {}
+  players: {}
 };
 
 let objCounter = 0;
@@ -9,7 +9,7 @@ function handleMessage(ws, msg, playerId, wss) {
 
   if (data.type === "addObject") {
     const id = "obj" + (++objCounter);
-    gameState.objects[id] = {
+    gameState.players[id] = {
       x: Math.random() * 4 - 2,
       y: Math.random() * 4 - 2,
       z: 0,

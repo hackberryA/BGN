@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-const ws = new WebSocket(`wss://${location.host}`);
 
+const ws = new WebSocket(`wss://${location.host}`);
 ws.onmessage = (event) => {
   const data = JSON.parse(event.data);
   if (data.type === "update") {
