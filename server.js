@@ -1,30 +1,26 @@
 const express = require("express");
 const path = require("path");
 const { WebSocketServer } = require("ws");
+const { gameState, handleMessage, removePlayer } = require("./game");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 静的ファイル (public フォルダの中)
 app.use(express.static(path.join(__dirname, "public")));
 
-// HTTPサーバー作成
 const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-// WebSocketサーバー作成
 const wss = new WebSocketServer({ server });
 
 wss.on("connection", (ws) => {
-  console.log("Client connected");
+  const playerId = Date.now();
+  gameState.players[playerId] = { x: 0, y: 0 };
 
-  ws.on("message", (message) => {
-    console.log("received:", message.toString());
-    ws.send(`echo: ${message}`);
-  });
+  ws.send(JSON.stringify({ type: "init", state: gameState }));
 
-  ws.on("close", () => {
-    console.log("Client disconnected");
-  });
+  ws.on("message", (msg) => handleMessage(ws, msg, playerId, wss));
+
+  ws.on("close", () => removePlayer(playerId, wss));
 });

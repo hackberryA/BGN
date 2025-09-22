@@ -2,25 +2,12 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>WebSocket Test</title>
+  <title>Board Game</title>
 </head>
 <body>
-  <h1>WebSocket テスト</h1>
-  <input id="msg" type="text" placeholder="メッセージ送信">
-  <button onclick="send()">送信</button>
-  <pre id="log"></pre>
-
-  <script>
-    const ws = new WebSocket(`wss://${location.host}`);
-
-    ws.onmessage = (event) => {
-      document.getElementById("log").textContent += event.data + "\n";
-    };
-
-    function send() {
-      const val = document.getElementById("msg").value;
-      ws.send(val);
-    }
-  </script>
+  <h1>同期型ボードゲーム</h1>
+  <canvas id="canvas"></canvas>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js"></script>
+  <script src="client.js"></script>
 </body>
 </html>
