@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-
 const ws = new WebSocket(`wss://${location.host}`);
 
 ws.onmessage = (event) => {
@@ -9,37 +8,37 @@ ws.onmessage = (event) => {
   }
 };
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowUp") ws.send(JSON.stringify({ type: "move", dx: 0, dy: -1 }));
-  if (e.key === "ArrowDown") ws.send(JSON.stringify({ type: "move", dx: 0, dy: 1 }));
+// 追加ボタン
+document.getElementById("addButton").addEventListener("click", () => {
+  ws.send(JSON.stringify({ type: "addObject" }));
 });
 
-// three.js 簡易描画
+// three.js 基本設定
 const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x222222);
+
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("canvas") });
-renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
+renderer.setSize(window.innerWidth /2, window.innerHeight /2);
 camera.position.z = 5;
 
-const players = {};
+const objects = {}; // idごとに管理
 
 function updateScene(state) {
-  // state.players を three.js のオブジェクトに反映
-  Object.keys(state.players).forEach((id) => {
-    if (!players[id]) {
+  Object.entries(state.objects).forEach(([id, obj]) => {
+    if (!objects[id]) {
       const geometry = new THREE.BoxGeometry();
-      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-      players[id] = new THREE.Mesh(geometry, material);
-      scene.add(players[id]);
+      const material = new THREE.MeshBasicMaterial({ color: obj.color });
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.position.set(obj.x, obj.y, obj.z);
+      objects[id] = mesh;
+      scene.add(mesh);
     }
-    players[id].position.x = state.players[id].x;
-    players[id].position.y = state.players[id].y;
   });
 }
 
-function tick() {
-  requestAnimationFrame(tick);
-renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
+function animate() {
+  requestAnimationFrame(animate);
   renderer.render(scene, camera);
 }
-tick();
+animate();

@@ -1,20 +1,22 @@
 let gameState = {
-  players: {}
+  objects: {}
 };
+
+let objCounter = 0;
 
 function handleMessage(ws, msg, playerId, wss) {
   const data = JSON.parse(msg);
 
-  if (data.type === "move") {
-    gameState.players[playerId].x += data.dx;
-    gameState.players[playerId].y += data.dy;
+  if (data.type === "addObject") {
+    const id = "obj" + (++objCounter);
+    gameState.objects[id] = {
+      x: Math.random() * 4 - 2,
+      y: Math.random() * 4 - 2,
+      z: 0,
+      color: 0xffffff * Math.random()
+    };
     broadcast({ type: "update", state: gameState }, wss);
   }
-}
-
-function removePlayer(playerId, wss) {
-  delete gameState.players[playerId];
-  broadcast({ type: "update", state: gameState }, wss);
 }
 
 function broadcast(msg, wss) {
@@ -26,4 +28,4 @@ function broadcast(msg, wss) {
   });
 }
 
-module.exports = { gameState, handleMessage, removePlayer };
+module.exports = { gameState, handleMessage };
