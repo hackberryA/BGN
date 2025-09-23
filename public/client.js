@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 
-const ws = new WebSocket(`ws://${location.host}`);
+// const ws = new WebSocket(`ws://${location.host}`);
+const ws = new WebSocket(`wss://my-service-name.onrender.com`);
 const params = new URLSearchParams(location.search);
 const roomId = params.get("roomId");
 document.getElementById("roomId").textContent = `Room ID: ${roomId}`;
