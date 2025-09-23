@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <title>部屋作成</title>
+  <meta charset="UTF-8">
+  <title>Board Game</title>
 </head>
 <body>
-  <h1>ゲーム部屋を作る</h1>
+  <h1>部屋を作る</h1>
   <button id="createBtn">部屋を作成</button>
   <p id="roomLink"></p>
-
   <script>
     const ws = new WebSocket(`wss://${location.host}`);
     document.getElementById("createBtn").onclick = () => {

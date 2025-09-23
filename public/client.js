@@ -1,7 +1,7 @@
-import * as THREE from 'three';
+// import * as THREE from 'three';
 
 const ws = new WebSocket(`wss//${location.host}`);
-const params = new URLSearchParams(location.search);
+// const params = new URLSearchParams(location.search);
 const parts = location.pathname.split("/");
 const roomId = parts[parts.length - 1];
 document.getElementById("roomId").textContent = `Room ID: ${roomId}`;
