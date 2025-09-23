@@ -8,18 +8,25 @@
   <h1>部屋を作る</h1>
   <button id="createBtn">部屋を作成</button>
   <p id="roomLink"></p>
+  <a id="roomUrl" href="/" ></a>
   <script>
-    const ws = new WebSocket(`wss://${location.host}`);
+    const protocol = (location.host == "localhost:3000") ? "ws" : "wss";
+    const ws = new WebSocket(`${protocol}://${location.host}`);
+
+    // 部屋作成ボタン
     document.getElementById("createBtn").onclick = () => {
       ws.send(JSON.stringify({ type: "createRoom" }));
     };
 
+    // メッセージ受信
     ws.onmessage = (msg) => {
       const data = JSON.parse(msg.data);
+
+      // 部屋作成
       if (data.type === "roomCreated") {
         const url = `${location.origin}/room/?r=${data.roomId}`;
-        document.getElementById("roomLink").innerHTML =
-          `<a href="${url}" target="_blank">${url}</a>`;
+        document.getElementById("roomUrl").innerHTML = url;
+        document.getElementById("roomUrl").href = url;
       }
     };
   </script>

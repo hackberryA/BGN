@@ -5,11 +5,13 @@
   <title>ゲーム部屋</title>
 </head>
 <body>
+  <button id="deleteStorage">delete storage</button>
+  <button id="setTestData">set test data</button>
   <h1>部屋</h1>
   <p id="roomId"></p>
 
   <div>
-    名前: <input id="userName" />
+    名前: <input id="username" />
     <button id="joinBtn">参加</button>
   </div>
 
@@ -17,17 +19,26 @@
   <ul id="playerList"></ul>
 
   <h2>ゲーム操作</h2>
-  <button id="playBtn">プレイする</button>
+  <button id="testActionBtn">テストアクション</button>
 
   <div id="log"></div>
-
-    <script type="importmap">
-			{
-				"imports": {
-					"three": "https://cdn.jsdelivr.net/npm/three@0.180/build/three.module.js"
-				}
-			}
-    </script>
-  <script src="client.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.180/build/three.module.js"
+        ,"OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.180/examples/jsm/controls/OrbitControls.js"
+      }
+    }
+  </script>
+  <script type="module" src="./client.js"></script>
+  <div id="app">
+    <canvas id="three-canvas"></canvas>
+    <div class="info">
+    <div><strong>Three.js — 5×5 グリッドに柱を置く (r0.180)</strong></div>
+    <div>交点にカーソルを寄せるとプレビューが表示されます。クリックで確定。</div>
+    <div style="margin-top:6px">左ドラッグ: 回転、ホイール: ズーム、右ドラッグ: 平行移動</div>
+    <button id="reset">リセット</button>
+    </div>
+  </div>
 </body>
 </html>
