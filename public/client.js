@@ -1,10 +1,9 @@
 import * as THREE from 'three';
 
-const protocol = location.protocol === "https:" ? "wss:" : "ws:";
-const ws = new WebSocket(`${protocol}//${location.host}`);
-// const ws = new WebSocket(`wss://my-service-name.onrender.com`);
+const ws = new WebSocket(`wss//${location.host}`);
 const params = new URLSearchParams(location.search);
-const roomId = params.get("roomId");
+const parts = location.pathname.split("/");
+const roomId = parts[parts.length - 1];
 document.getElementById("roomId").textContent = `Room ID: ${roomId}`;
 
 document.getElementById("joinBtn").onclick = () => {

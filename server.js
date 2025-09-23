@@ -10,6 +10,10 @@ const wss = new WebSocket.Server({ server });
 
 app.use(express.static("public"));
 
+app.get("/room/:roomId", (req, res) => {
+  res.sendFile(__dirname + "/public/room.html");
+});
+
 const rooms = {}; // { roomId: { players: [], turnIndex: 0 } }
 
 // WebSocket 接続処理
