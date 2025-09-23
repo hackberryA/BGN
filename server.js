@@ -16,13 +16,26 @@ app.use(express.static("public"));
 
 const rooms = {}; // { roomId: { players: [], turnIndex: 0 } }
 
+const ROOM_IDS = {
+    "0":"bump", "1":"of", "2":"for", "3":"and", "4":"or","5":"xor","6":"nor", "7":"is", "8":"null", "9":"neko",
+    "a":"choco", "b":"mint", "c":"ice", "d":"berry", "e":"sherbet", "f":"rice", "g":"potato", "h":"tomato","i":"tamago",
+    "j":"cat", "k":"curry", "l":"pig", "m":"chicken", "n":"beef", "o":"lamb", "p":"fire", "q":"water", "r":"thunder",
+    "s":"rapsody", "t":"sonata", "u":"blood", "v":"light", "w":"dark", "x":"grey", "y":"red", "z":"yellow",
+    "@":"blue", "?":"sky", "!":"ocean", "#":"mountain"
+}
+
+
 // WebSocket 接続処理
 wss.on("connection", (ws) => {
   ws.on("message", (message) => {
     const data = JSON.parse(message);
 
     if (data.type === "createRoom") {
-      const roomId = uuidv4().slice(0, 6);
+      const id = uuidv4().slice(0, 3);
+      roomId = ROOM_IDS[id.slice(0, 1)]
+      roomId += ROOM_IDS[id.slice(1, 1)]
+      roomId += ROOM_IDS[id.slice(2, 1)]
+      roomId += ROOM_IDS[id.slice(3, 1)]
       rooms[roomId] = { players: [], turnIndex: 0 };
       ws.send(JSON.stringify({ type: "roomCreated", roomId }));
     }

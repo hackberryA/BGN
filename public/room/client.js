@@ -1,5 +1,6 @@
 // import * as THREE from 'three';
 
+// 部屋ID
 const params = new URLSearchParams(location.search);
 const roomId = params.get("r");
 document.getElementById("roomId").textContent = `Room ID: ${roomId}`;
