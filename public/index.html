@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>Board Game</title>
+  <meta charset="UTF-8" />
+  <title>部屋作成</title>
 </head>
 <body>
-    <script type="importmap">
-			{
-				"imports": {
-					"three": "https://cdn.jsdelivr.net/npm/three@0.180/build/three.module.js"
-				}
-			}
-    </script>
-    <script type="module" src="./client.js"></script>
-    <h1>ばびろん</h1>
-      <button id="addButton">オブジェクト追加</button>
-    <canvas id="canvas"></canvas>
+  <h1>ゲーム部屋を作る</h1>
+  <button id="createBtn">部屋を作成</button>
+  <p id="roomLink"></p>
+
+  <script>
+    const ws = new WebSocket(`ws://${location.host}`);
+    document.getElementById("createBtn").onclick = () => {
+      ws.send(JSON.stringify({ type: "createRoom" }));
+    };
+
+    ws.onmessage = (msg) => {
+      const data = JSON.parse(msg.data);
+      if (data.type === "roomCreated") {
+        const url = `${location.origin}/room.html?roomId=${data.roomId}`;
+        document.getElementById("roomLink").innerHTML =
+          `<a href="${url}" target="_blank">${url}</a>`;
+      }
+    };
+  </script>
 </body>
 </html>
