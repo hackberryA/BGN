@@ -10,7 +10,7 @@ const wss = new WebSocket.Server({ server });
 
 app.use(express.static("public"));
 
-app.get("/room/:roomId", (req, res) => {
+app.get("/room/:roomId", (_, res) => {
   res.sendFile(__dirname + "/public/room.html");
 });
 
