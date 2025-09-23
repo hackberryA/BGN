@@ -1,11 +1,11 @@
 // import * as THREE from 'three';
 
-const ws = new WebSocket(`wss//${location.host}`);
-// const params = new URLSearchParams(location.search);
-const parts = location.pathname.split("/");
-const roomId = parts[parts.length - 1];
+const params = new URLSearchParams(location.search);
+const roomId = params.get("r");
 document.getElementById("roomId").textContent = `Room ID: ${roomId}`;
 
+
+const ws = new WebSocket(`wss//${location.host}`);
 document.getElementById("joinBtn").onclick = () => {
   const userName = document.getElementById("userName").value;
   ws.send(JSON.stringify({ type: "joinRoom", roomId, userName }));
