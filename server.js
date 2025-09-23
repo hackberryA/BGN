@@ -13,7 +13,6 @@ app.use(express.static("public"));
 // app.get("/room/:roomId", (_, res) => {
 //   res.sendFile(__dirname + "/public/room.html");
 // });
-
 const rooms = {}; // { roomId: { players: [], turnIndex: 0 } }
 
 const ROOM_IDS = {
@@ -33,8 +32,8 @@ wss.on("connection", (ws) => {
     if (data.type === "createRoom") {
       const id = uuidv4().slice(0, 3);
       roomId = ROOM_IDS[id.slice(0, 1)]
-      roomId += "-" + ROOM_IDS[id.slice(1, 1)]
-      roomId += "-" + ROOM_IDS[id.slice(2, 1)]
+      roomId += "-" + ROOM_IDS[id.slice(1, 2)]
+      roomId += "-" + ROOM_IDS[id.slice(2, 3)]
       rooms[roomId] = { players: [], turnIndex: 0 };
       ws.send(JSON.stringify({ type: "roomCreated", roomId }));
     }
