@@ -1,9 +1,9 @@
-import * as THREE from 'three';
 import { OrbitControls } from 'OrbitControls';
+import * as THREE from 'three';
 
-const protocol = (location.host == "localhost:3000") ? "ws" : "wss";
-const ws = new WebSocket(`${protocol}://${location.host}`);
-
+// --------------------------------------------------
+// ローカルストレージ
+// --------------------------------------------------
 // ローカルストレージ用キー
 const STORAGE_USER_ID   = "7n7n8h7userId"
 const STORAGE_USER_NAME = "7n7n8h7username"
@@ -14,19 +14,9 @@ let storageUsername = localStorage.getItem(STORAGE_USER_NAME);
 if (storageUserId) {
   document.getElementById("joinBtn").textContent = "変更"
 }
-
-// 【デバッグ用】 ローカルストレージ削除
-document.getElementById("deleteStorage").onclick = () => {
-  localStorage.removeItem(STORAGE_USER_ID)
-  localStorage.removeItem(STORAGE_USER_NAME)
-  location.reload()
-};
-// テストデータを送信
-document.getElementById("setTestData").onclick = () => {
-  ws.send(JSON.stringify({ type: "setTestData", roomId, data: "testData" }));
-};
-
-
+// --------------------------------------------------
+// 部屋
+// --------------------------------------------------
 // 部屋ID
 const params = new URLSearchParams(location.search);
 const roomId = params.get("r");
@@ -59,15 +49,40 @@ if (storageUserId) {
   document.getElementById("username").value = storageUsername;
 }
 
+// ##################################################
+// WebSocket
+// ##################################################
+const protocol = (location.host == "localhost:3000") ? "ws" : "wss";
+const ws = new WebSocket(`${protocol}://${location.host}`);
+
+// --------------------------------------------------
+// イベント登録
+// --------------------------------------------------
+// 【デバッグ用】 ローカルストレージ削除
+document.getElementById("deleteStorage").onclick = () => {
+  localStorage.removeItem(STORAGE_USER_ID)
+  localStorage.removeItem(STORAGE_USER_NAME)
+  location.reload()
+};
+// テストデータを送信
+document.getElementById("setTestData").onclick = () => {
+  ws.send(JSON.stringify({ type: "setTestData", roomId, data: "testData" }));
+};
+
+// --------------------------------------------------
+// WebSocket 開始時の処理
+// --------------------------------------------------
 ws.onopen = () => {
   console.log("client.onopen")
   ws.send(JSON.stringify({
     type: "reconnect",
-    roomId
+    roomId: roomId,
   }));
 };
 
-
+// --------------------------------------------------
+// WebSocket メッセージ受信時の処理
+// --------------------------------------------------
 ws.onmessage = (msg) => {
   const msgData = JSON.parse(msg.data);
   console.log("client: " + msgData.type)
@@ -149,7 +164,6 @@ ws.onmessage = (msg) => {
 // Three.js r0.180 用に CDN を指定
 // import * as THREE from 'https://unpkg.com/three@0.180.0/build/three.module.js';
 // import { OrbitControls } from 'https://unpkg.com/three@0.180.0/examples/jsm/controls/OrbitControls.js';
-
 
 // キャンバス
 const canvas = document.getElementById('three-canvas');

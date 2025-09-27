@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>Babylon</title>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.180/build/three.module.js"
+        , "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.180/examples/jsm/controls/OrbitControls.js"
+        , "CANNON": "https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/+esm"
+      }
+    }
+  </script>
+  <script>
+    // --------------------------------------------------
+    // Initialize
+    // --------------------------------------------------
+    // WebSocket
+    const protocol = (location.host == "127.0.0.1:5500") ? "ws" : "wss";
+    const ws = new WebSocket(`${protocol}://${location.host}`);
+    // room id
+    const params = new URLSearchParams(location.search);
+    const roomId = params.get("r");
+    // room data
+    let roomData = {roomdId: roomId}
+  </script>
+  <script type="module" src="./main.js"></script>
+  <style>
+    .wrap {display: flex; flex-flow: column; border: 2px #ccc solid; margin: 0 0 1em;}
+    .content {margin: .5em; position: relative;}
+  </style>
+</head>
+<body>
+  <!-- <h1>部屋</h1>
+  <button id="deleteStorage">delete storage</button>
+  <button id="setTestData">set test data</button>
+
+  <div>
+    名前: <input id="username" />
+    <button id="joinBtn">参加</button>
+  </div>
+
+  <h2>プレイヤー</h2>
+  <ul id="playerList"></ul>
+
+  <h2>ゲーム操作</h2>
+  <button id="testActionBtn">テストアクション</button> -->
+
+
+  <div id="log"></div>
+  <div id="app">
+    <div id="container" class="content" style="display: flex;">
+      <!-- <button id="reset" style="position: absolute; top: 10px; left: 10px; z-index:10;">reset</button> -->
+      <div>
+        <canvas id="main"></canvas>
+      </div>
+      <div>
+        <div class="content">roomId: <span id="roomId"></span></div>
+
+        <div class="content">【カーソル位置】</div>
+        <div class="content">[hover object] <span id="hover-object"></span></div>
+        <div class="content">[hover pos] <span id="hover-pos"></span></div>
+
+        <div class="content">【クリック】</div>
+        <div class="content">[click object] <span id="click-object"></span></div>
+        <div class="content">[click pos] <span id="click-pos"></span></div>
+        <div class="content"><span id="clickinfo"></span></div>
+
+        <div class="content">【選択中】</div>
+        <div class="content">[selected] <span id="selected-object"></span></div>
+      </div>
+    </div>
+  </div>
+    <div id="container" class="content" style="display: flex;">
+      <div>
+        <button id="selectTerraceTile">テラスタイル</button>
+        <button id="selectSinglePillar">シングル柱</button>
+        <button id="selectDoublePillar">ダブル柱</button>
+        <button id="selectFountain">噴水</button>
+        <button id="selectStair">階段</button>
+        <button id="selectBridge">橋</button>
+        <!-- <button id="btn">展望台</button> -->
+      </div>
+    </div>
+  </div>
+</body>
+</html>
