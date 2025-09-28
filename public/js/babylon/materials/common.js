@@ -2,15 +2,6 @@ import { componentHeight, componentWidth, defaultData } from "../const.js"
 import * as three from '../three.js';
 
 
-// 格子座標を Three.Vector3.position 用に変換する
-export const getPosition = (x,y,z) => {
-    return {
-        x: componentWidth * (x - 4.5),
-        y: componentHeight * (y - 1) + 1,
-        z: componentWidth * (z - 4.5),
-    }
-};
-
 // オブジェクトの作成
 export const clone = (targetObject, x, y, z, preview=false) => {
     const pos = getPosition(x, y, z)

@@ -1,16 +1,20 @@
 import * as THREE from "three";
-import { setFocus } from '../utils/mouseevent.js';
-import * as three from "./three.js";
 import { initComponents } from './components.js';
-import { componentWidth } from "./const.js";
-import { setPreviewPoints } from './materials/previewPoint.js';
+import { COMPONENTS, componentWidth } from "./const.js";
+import * as three from "./three.js";
+
+export const componentData = Array.from({ length: 8 }, () =>
+    Array.from({ length: 8 }, () =>
+        Array.from({ length: 8 }, ()=>({ tileNo: 0, component: COMPONENTS.NONE }))
+    )
+);
 
 // GridHelper( size, divisions, colorCenterLine: Color, colorGrid :-Color-)
 const gridHelper = new THREE.GridHelper(componentWidth * 8, 8, 0xEEEEEE, 0xEEEEEE);
 three.scene.add(gridHelper);
 
 //コンポーネント設定
-initComponents(three.scene)
+initComponents()
 
 // 描画
 // setPreviewPoints()

@@ -1,7 +1,7 @@
 import * as THREE from "three";
-import { componentWidth, defaultData, COMPONENTS } from "../const.js";
-import * as three from "../three.js";
-import { getPosition, clone } from "./common.js";
+import { componentWidth, defaultData, COMPONENTS } from "../babylon/const.js";
+import * as three from "../babylon/three.js";
+import { getPosition, clone } from "../babylon/materials/common.js";
 
 // --------------------------------------------------
 // プレビュー可能位置の配置

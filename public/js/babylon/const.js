@@ -4,10 +4,6 @@ import * as THREE from 'three';
 export const MAIN_CANVAS_ID = "main"
 // export const defaultMaterial = new CANNON.Material();
 
-export const defaultData = Object.freeze({
-    name: "", component: "", selected: false, preview: false,
-    floor: 0, index: 0, status: "", position: {x:0,y:0,z:0},
-})
 
 // 幅: 1マスを基準とする
 // 高さ: 柱を基準とする
@@ -15,7 +11,6 @@ export const componentWidth = 50;
 export const componentHeight = 30;
 export const componentColor = 0xFFFFAA;
 
-export const defaultMaterial = new THREE.MeshStandardMaterial({ color: componentColor });
 
 export const COMPONENTS = Object.freeze({
     // コンポーネント
@@ -35,8 +30,29 @@ export const COMPONENTS = Object.freeze({
     BRIDGE: "bridge", // 橋：15個
     // その他
     PREVIEW_POINT: "preview-point",
+    NONE: "none",
+    UNPLACEBLE: "unplaceble", // 上にタイルが浮いてるので置けない場所
 });
+export const STATUS = {
+    CONFIRMED: "confirmed",
+    HOVER: "hover",
+    SELECTED: "selected",
+    PREVIEW: "preview",
+    INVISIBLE: "invisible",
+    PREINVISIBLE: "preinvisible",
+}
+export const COMPONENT_LAYER = {
+    DEFAULT: 0,
+    PREVIEW: 1,
+    SELECTED: 1,
+    INVISIBLE: 3,
+}
 
+export const defaultData = Object.freeze({
+    component: COMPONENTS.NONE, // コンポーネントの種類
+    status: STATUS.INVISIBLE, // 表示状態
+    floor: 0, index: 0, status: "", position: {x:0,y:0,z:0},
+})
 export const LAYER = Object.freeze({ CLAY: 3, GRANITE: 2, BASALT: 1, BEDROCK: -1 });
 export const FLOWER = Object.freeze({ WHITE: 1, BLUE: 2, RED: 3, YELLOW: 4, NONE: -1 });
 export const SYMBOL = Object.freeze({ FOUNTAIN: 1, BRIDGE: 2, STATUE: 3, STAIR: 4, NONE: -1});

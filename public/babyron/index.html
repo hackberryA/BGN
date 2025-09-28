@@ -8,6 +8,7 @@
       "imports": {
         "three": "https://cdn.jsdelivr.net/npm/three@0.180/build/three.module.js"
         , "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.180/examples/jsm/controls/OrbitControls.js"
+        , "RoundedBoxGeometry": "https://cdn.jsdelivr.net/npm/three@0.180/examples/jsm/geometries/RoundedBoxGeometry.js"
         , "CANNON": "https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/+esm"
       }
     }
@@ -69,19 +70,26 @@
 
         <div class="content">【選択中】</div>
         <div class="content">[selected] <span id="selected-object"></span></div>
+        <div class="content"><button id="confirm">確定</button></div>
+        <div class="content"><button id="reset">リセット</button></div>
+        
       </div>
     </div>
   </div>
     <div id="container" class="content" style="display: flex;">
       <div>
-        <button id="selectTerraceTile">テラスタイル</button>
-        <button id="selectSinglePillar">シングル柱</button>
-        <button id="selectDoublePillar">ダブル柱</button>
-        <button id="selectFountain">噴水</button>
-        <button id="selectStair">階段</button>
-        <button id="selectBridge">橋</button>
-        <!-- <button id="btn">展望台</button> -->
+        <div class="content">
+          <button name="aa" id="selectTerraceTile">テラスタイル</button>
+          <button name="aa" id="selectSinglePillar">シングル柱</button>
+          <button name="aa" id="selectDoublePillar">ダブル柱</button>
+          <button name="aa" id="selectFountain">噴水</button>
+          <button name="aa" id="selectStair">階段</button>
+          <button name="aa" id="selectBridge">橋</button>
+          <!-- <button id="btn">展望台</button> -->
       </div>
+        <div class="content">
+          <span id="message"></span>
+        </div>
     </div>
   </div>
 </body>

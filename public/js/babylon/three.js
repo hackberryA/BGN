@@ -1,8 +1,7 @@
-import * as THREE from "three";
 import * as CANNON from "CANNON";
-import {OrbitControls} from "OrbitControls"
-import { COMPONENTS, defaultData } from "./const.js";
-import { getPosition } from "./materials/common.js";
+import { OrbitControls } from "OrbitControls";
+import * as THREE from "three";
+import { COMPONENT_LAYER } from "./const.js";
 
 // --------------------------------------------------
 // setup
@@ -25,6 +24,10 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 export const camera = new THREE. PerspectiveCamera (45, 1, 0.1, 10000); // (視野角, aspect ratio, near, far)
 camera.position.set(300, 300, 300);
 camera.lookAt(scene.position);
+camera.layers.enable(COMPONENT_LAYER.DEFAULT)
+camera.layers.enable(COMPONENT_LAYER.PREVIEW)
+camera.layers.enable(COMPONENT_LAYER.SELECTED)
+camera.layers.disable(COMPONENT_LAYER.INVISIBLE)
 
 // OrbitControls
 export const controls = new OrbitControls(camera, renderer.domElement);
@@ -45,6 +48,7 @@ scene.add(directionalLight);
 
 // raycaster: マウス位置からまっすぐに伸びる光線ベクトルを生成
 export const raycaster = new THREE.Raycaster();
+raycaster.layers.set(COMPONENT_LAYER.PREVIEW); // 判定対象レイヤーだけ見る
 
 //mouse
 export const mouse = new THREE.Vector2(); // マウス五座標管理用ベクトル

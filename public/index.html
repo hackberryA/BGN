@@ -10,7 +10,14 @@
   <p id="roomLink"></p>
   <a id="roomUrl" href="/" ></a>
   <script>
-    const protocol = (location.host == "localhost:3000") ? "ws" : "wss";
+    let protocol = "wss";
+    switch (location.host) {
+      case "localhost:3000":
+      case "localhost:5500":
+      case "127.0.0.1:3000":
+      case "127.0.0.1:5500":
+        protocol = "ws"
+    }
     const ws = new WebSocket(`${protocol}://${location.host}`);
 
     // 部屋作成ボタン

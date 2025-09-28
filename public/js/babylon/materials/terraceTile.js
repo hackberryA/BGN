@@ -1,6 +1,3 @@
-import { componentHeight, componentWidth, defaultMaterial, COMPONENTS, defaultData } from "../const.js";
-import * as THREE from "three";
-import { getPosition } from "./common.js";
 
 const width = componentWidth * 2
 const colors = {1: 0xEEEEEE, 2: 0xEECCCC, 3: 0xCCCCCC}
@@ -29,28 +26,4 @@ export const createQuarryCardMesh =(floor, row, col) => {
     card.rotation.x = -Math.PI / 2;
     card.rotation.z = (Math.random() - .5) / 5;
     return card
-}
-
-const geometry = new THREE.BoxGeometry (componentWidth, componentHeight / 20, componentWidth);
-const cell = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({color: 0x00FAFA}));
-cell.position.set(0, 0, 0);
-
-// Terrace Tiles
-export const create = (x,y,z,r=0) => {
-    const {px, py, pz} = getPosition(x,y,z);
-    const c1 = cell.clone()
-    const c2 = cell.clone()
-    c2.position.x = componentWidth
-    const c3 = cell.clone()
-    c3.position.z = componentWidth
-    const c4 = cell.clone()
-    c4.position.x = componentWidth
-    c4.position.z = componentWidth
-    const tile = new THREE.Group();
-    tile.add(c1, c2, c3,c4)
-    tile.position.x = px;
-    tile.position.y = py;
-    tile.position.z = pz;
-    tile.userData = {...defaultData, component: COMPONENTS.TERRACE_TILE}
-    return tile
 }
