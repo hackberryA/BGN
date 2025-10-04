@@ -1,18 +1,35 @@
-import * as dom from '../js/utils/dom.js';
-import * as storage from '../js/utils/storage.js';
-import * as websocket from '../js/utils/websocket.js';
-import * as event from '../js/utils/event.js'
-import * as selectComponent from '../js/babylon/event/selectComponent.js'
+import WebSocketFrontEnd from "../js/babylon/class/WebSocketFrontEnd.js"
+import dom from '../js/babylon/utils/dom.js';
 
 // --------------------------------------------------
-// intialize
+// Initialize
 // --------------------------------------------------
-dom.setInnerText("roomId", `Room ID: ${roomId}`);
-dom.setValue("username", storage.getUsername());
+// WebSocket　
+const ws = new WebSocketFrontEnd();
 
-storage.initialize();
-websocket.initialize();
-event.initialize();
-selectComponent.initialize();
+// ボタンイベント登録
+dom.setOnclick("joinGame", () => {
+    const playerName = dom.getValue("playerName")
+    ws.send("joinGame", {playerName})
+})
 
-import * as babylon from '../js/babylon/babyron.js'
+// // room id　　　　
+// const params = new URLSearchParams(location.search);
+// const roomId = params.get("r");
+// // room data
+// let roomData = {roomdId: roomId}
+
+// import * as storage from '../js/utils/storage.js';
+
+// // --------------------------------------------------
+// // intialize
+// // --------------------------------------------------
+// dom.setInnerText("roomId", `Room ID: ${roomId}`);
+// dom.setValue("username", storage.getUsername());
+
+// storage.initialize();
+// websocket.initialize();
+
+// // event.initialize();
+// // selectComponent.initialize();
+

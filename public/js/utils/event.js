@@ -1,4 +1,4 @@
-import * as dom from './dom.js';
+import * as dom from '../babylon/utils/dom.js';
 import * as storage from './storage.js';
 
 // --------------------------------------------------

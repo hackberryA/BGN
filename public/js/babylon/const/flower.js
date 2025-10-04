@@ -1,0 +1,1 @@
+export default { BLUE: 0, RED: 1, WHITE: 2, YELLOW: 3 }

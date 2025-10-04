@@ -9,22 +9,11 @@
         "three": "https://cdn.jsdelivr.net/npm/three@0.180/build/three.module.js"
         , "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.180/examples/jsm/controls/OrbitControls.js"
         , "RoundedBoxGeometry": "https://cdn.jsdelivr.net/npm/three@0.180/examples/jsm/geometries/RoundedBoxGeometry.js"
+        ,"three/addons/": "https://cdn.jsdelivr.net/npm/three@0.177.0/examples/jsm/"
+        , "@pixiv/three-vrm": "https://cdn.jsdelivr.net/npm/@pixiv/three-vrm@3/lib/three-vrm.module.min.js"
         , "CANNON": "https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/+esm"
       }
     }
-  </script>
-  <script>
-    // --------------------------------------------------
-    // Initialize
-    // --------------------------------------------------
-    // WebSocket
-    const protocol = (location.host == "127.0.0.1:5500") ? "ws" : "wss";
-    const ws = new WebSocket(`${protocol}://${location.host}`);
-    // room id
-    const params = new URLSearchParams(location.search);
-    const roomId = params.get("r");
-    // room data
-    let roomData = {roomdId: roomId}
   </script>
   <script type="module" src="./main.js"></script>
   <style>
@@ -50,6 +39,21 @@
 
 
   <div id="log"></div>
+  <div>
+    <div id="container" class="content" style="display: flex;">
+      <!-- <button id="reset" style="position: absolute; top: 10px; left: 10px; z-index:10;">reset</button> -->
+      <div>
+          <button id="joinGame">ゲーム参加</button>
+          <input id="playerName" value="test" />
+      </div>
+    </div>
+    <div id="container" class="content" style="display: flex;">
+      <!-- <button id="reset" style="position: absolute; top: 10px; left: 10px; z-index:10;">reset</button> -->
+      <div>
+          <button id="startGame">ゲーム開始</button>
+      </div>
+    </div>
+  </div>
   <div id="app">
     <div id="container" class="content" style="display: flex;">
       <!-- <button id="reset" style="position: absolute; top: 10px; left: 10px; z-index:10;">reset</button> -->

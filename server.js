@@ -42,6 +42,7 @@ const DEFAULT_GAME_DATA = {
 // WebSocket 接続処理
 wss.on("connection", (ws) => {
   ws.on("message", (message) => {
+    console.log(message)
     const msgData = JSON.parse(message);
     const { roomId } = msgData;
     if (roomData[roomId]) {
