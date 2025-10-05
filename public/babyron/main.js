@@ -1,17 +1,14 @@
-import WebSocketFrontEnd from "../js/babylon/class/WebSocketFrontEnd.js"
-import dom from '../js/babylon/utils/dom.js';
+import PlayerInfo from "../js/babylon/class/PlayerInfo.js";
+import WebSocketFrontend from "../js/babylon/class/WebSocketFrontend.js"
 
 // --------------------------------------------------
 // Initialize
 // --------------------------------------------------
-// WebSocket　
-const ws = new WebSocketFrontEnd();
+// プレイヤー情報
+const playerInfo = new PlayerInfo()
 
-// ボタンイベント登録
-dom.setOnclick("joinGame", () => {
-    const playerName = dom.getValue("playerName")
-    ws.send("joinGame", {playerName})
-})
+// WebSocket　
+const ws = new WebSocketFrontend(playerInfo);
 
 // // room id　　　　
 // const params = new URLSearchParams(location.search);

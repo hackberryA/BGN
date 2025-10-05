@@ -1,27 +1,27 @@
 // --------------------------------------------------
 // DOM操作
 // --------------------------------------------------
-const d = (id) => document.getElementById(id)
+const d = (id: string) => document.getElementById(id)
 
-const setInnerText = (id, text) => {
+const setInnerText = (id: string, text: string) => {
     const obj = d(id);
     if (obj) obj.innerText = text;
 }
-const setInnerHTML = (id, text) => {
+const setInnerHTML = (id: string, text: string) => {
     const obj = d(id);
     if (obj) obj.innerHTML = text;
 }
-const setOnclick = (id, callback) => {
+const setOnclick = (id: string, callback: ()=>void) => {
     const obj = d(id);
     if (obj) obj.onclick = callback
 }
-const getValue = (id) => {
+const getValue = (id: string) => {
     const obj = d(id);
-    return obj ? d(id).value : undefined
+    return obj ? obj.getAttribute("value") : undefined
 }
-const setValue = (id, value) => {
+const setValue = (id: string, value: string) => {
     const obj = d(id);
-    if(obj) obj.value = value
+    if(obj) obj.setAttribute("value", value)
 }
 
 export default { setInnerText, setInnerHTML, setOnclick, getValue, setValue }

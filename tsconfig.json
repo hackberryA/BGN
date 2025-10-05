@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    // コンパイル後のJavaScriptのバージョン
+    "target": "ESNext",
+    // モジュールシステム
+    "module": "NodeNext",
+    // .ts拡張子を持つファイルのインポートを可能に
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    // モジュール解決の際に、TypeScriptの構文を厳密に解釈
+    "verbatimModuleSyntax": false,
+    // すべての厳格な型チェックオプションを有効に
+    "strict": true
+  }
+}
