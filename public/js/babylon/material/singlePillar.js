@@ -37,7 +37,7 @@ shaft.position.y = height / 2;
 
 //柱頭
 const capital = new THREE. Mesh(
-    new RoundedBoxGeometry (width/2, unit(2), width/2, 1, -0.2), // RoundedBoxGeometry (幅 高さ, 奥行, セグメント数。 角の半径) 
+    new RoundedBoxGeometry(width/2, unit(2), width/2, 1, -0.2), // RoundedBoxGeometry (幅 高さ, 奥行, セグメント数。 角の半径) 
     defaultMaterial
 );
 capital.position.y = height - 2;
@@ -45,7 +45,6 @@ capital.position.y = height - 2;
 // 柱基
 const base = capital.clone();
 base.position.y = 2;
-
 
 // グループ化
 singlePillar.add(getHitBox(), shaft, capital, base);

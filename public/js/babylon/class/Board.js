@@ -1,12 +1,15 @@
-import Component from "./Component.js"
-import STATUS from "../const/status.js";
-import LAYER from "../const/layer.js";
-import TYPE from "../const/componentType.js";
-import dom from "../utils/dom.js"
 import { OrbitControls } from "OrbitControls";
 import * as THREE from "three";
+import TYPE from "../const/componentType.js";
+import LAYER from "../const/layer.js";
+import STATUS from "../const/status.js";
+import dom from "../utils/dom.js";
+import Component from "./Component.js";
 
-const canvasWidth = window.innerWidth / 2;
+import { VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { height, width } from "../const/material.js";
+
 
 /**
  * 盤面クラス（プレイヤー単位）
@@ -34,7 +37,7 @@ export default class Board {
         // scene
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(0xffffff);
-        this.scene.add(new THREE.AmbientLight(0xffffff, .4)); // 環境光
+        this.scene.add(new THREE.AmbientLight(0xffffff, 1)); // 環境光
         const directionalLight = new THREE.DirectionalLight(0xffffff, 2); // 太陽光
         directionalLight.position.set(10, 20, 10);
         directionalLight.castShadow = true;
@@ -78,6 +81,60 @@ export default class Board {
 
         window.addEventListener('resize', this.resizeRenderer);
         this.resizeRenderer();
+
+        
+        this.clock = new THREE.Clock();
+        this.clock.start();
+        
+        this.currentVrm = undefined;
+        // Create a GLTFLoader - The loader for loading VRM models
+        this.loader = new GLTFLoader();
+
+
+
+        this.loader.crossOrigin = 'anonymous';
+        this.loader.register((parser) => {
+
+            return new VRMLoaderPlugin(parser);
+
+        });
+
+
+        // Install a GLTFLoader plugin that enables VRM support
+        this.loader.register((parser) => {
+            return new VRMLoaderPlugin(parser);
+        });
+
+        this.loader.load(
+            // URL of the VRM you want to load
+            'nanoha.vrm',
+
+            (gltf) => {
+                const vrm = gltf.userData.vrm;
+                vrm.scene.scale.x = height * 3
+                vrm.scene.scale.y = height * 3
+                vrm.scene.scale.z = height * 3
+                const p = { x: width * (1 - 3.5), y: height * 1 + 1, z: width * (1 - 3.5) }
+                vrm.scene.position.x = p.x
+                vrm.scene.position.y = p.y
+                vrm.scene.position.z = p.z
+                // console.log(vrm)
+                VRMUtils.removeUnnecessaryVertices(gltf.scene);
+                VRMUtils.removeUnnecessaryJoints(gltf.scene);
+                
+                vrm.scene.traverse((obj) => {
+                    obj.frustumCulled = false;
+                });
+                
+                this.currentVrm = vrm;
+                // console.log(vrm);
+                this.scene.add(vrm.scene);
+            },
+            (progress) => {
+                // console.log('Loading model...', 100.0 * (progress.loaded / progress.total), '%')
+            },
+            (error) => console.error(error)
+        );
 
         // --------------------------------------------------
         // プレイヤー情報
@@ -175,7 +232,18 @@ export default class Board {
     /** 描画 */
     render = () => { this.renderer.render(this.scene, this.camera); }
     /** 描画 */
-    animate = () => { requestAnimationFrame(this.animate); this.render(); }
+    animate = () => { 
+        requestAnimationFrame(this.animate);
+        this.render();
+        const deltaTime = this.clock.getDelta();
+        if (this.currentVrm) {
+            this.currentVrm.humanoid.getNormalizedBoneNode( 'leftUpperArm' ).rotation.z = 0.75;
+            this.currentVrm.humanoid.getNormalizedBoneNode( 'rightUpperArm' ).rotation.z = -0.75;
+            // this.currentVrm.expressionManager.setValue('happy', 1.0);
+            this.currentVrm.expressionManager.update();
+            this.currentVrm.update( deltaTime );
+        }
+    }
     /** 現在カーソルが示すオブジェクトを取得 */
     getRaycasterIntersectObjects = () => {
         this.raycaster.setFromCamera(this.mouse, this.camera);

@@ -5,7 +5,7 @@ import { defaultMaterial, height, getHitBox, width } from "../const/material.js"
 // 階段
 // --------------------------------------------------
 export const stair = new THREE.Group();
-const steps = 10; // 段数
+const steps = 15; // 段数
 const stepwidth = width * 0.75 / steps;
 const stepHeight = height / (steps-1);
 for (let i = 1; i <= steps; i++) {

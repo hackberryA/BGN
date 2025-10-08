@@ -67,11 +67,11 @@ export default class Component {
             clonedObject.traverse((child) => {
                 if (child.isMesh) {
                     child.material = child.material.clone();
-                    
                 }
             });
         }
-        clonedObject.layers.set(LAYER.HIDDEN);
+        // clonedObject.layers.set(LAYER.HIDDEN);
+        clonedObject.layers.set(LAYER.CONFIRMED);
         clonedObject.name = `${component}#${x},${y},${z}`;
         clonedObject.userData.layer = LAYER.HIDDEN;
         const pos = this.convertPosition(x, y, z)
