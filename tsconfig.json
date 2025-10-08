@@ -10,6 +10,6 @@
     // モジュール解決の際に、TypeScriptの構文を厳密に解釈
     "verbatimModuleSyntax": false,
     // すべての厳格な型チェックオプションを有効に
-    "strict": true
+    "esModuleInterop": true
   }
 }

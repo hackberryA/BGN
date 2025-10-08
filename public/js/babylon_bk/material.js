@@ -3,7 +3,7 @@ import * as LAYER from "../babylon/const/layer.js";
 import * as STATUS from "../babylon/const/status.js";
 import { singlePillar } from "./material/singlePillar.js";
 import { terraceTile } from "./material/terraceTile.js";
-import { width, height, BOARD_SIZE, MAX_LAYER } from "./const/material.js";
+import { width, height, BOARD_SIZE, MAX_LAYER } from "../babylon/const/material.js";
 import * as three from "./three.js"
 import * as dom from "../babylon/utils/dom.js"
 import { stair } from "./material/stair.js";

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="SJIS">
+    <title>Babylonia</title>
+    <!-- レスポンシブ無効にする -->
+    <meta name="viewport" content="width=1024">
+    <!--Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        html { font-size: 75%; } /* default: 16px */
+        .p0 { padding: 0 !important; }
+        .m0 { margin: 0 !important; }
+        .mb0 { margin-bottom: 0 !important; }
+        .center { justify-content: center; }
+        .btn-small { height: 25px; line-height: 25px; padding: 0 10px; }
+        .border1 { border: 1px skyblue solid; }
+        .border2 { border: 2px skyblue solid; }
+        .border3 { border: 3px skyblue solid; }
+        /* タブ設定 */
+        .tabs { height: 35px; border-bottom: 1px skyblue solid; }
+        .tabs .tab { line-height: 10px; white-space-collapse: collapse;}
+        .tabs .tab a { padding-top: 8px; color: #2196F3; }
+        .tabs .tab a.active { color: #008cff; background-color: #def0ff; }
+        .tabs .tab a:hover { color: #2196F3; background-color: #def0ff; }
+        .tabs .tab a:focus, .tabs .tab a:focus.active { color: #008cff; background-color: #def0ff; }
+        .tabs .indicator { display: none; }
+        .tabs-tab { padding: 0; }
+        .tab-content { margin-top: 5px; font-size: 50%; overflow-x: hidden; line-height: 18px; background-color: white; height: 500px }
+        /* ストックタイル画像 */
+        .stock-tile-main { position: absolute; right: 2px; top: 20px; height: 40px; width: 40px; }
+        .stock-tile-sub { position: absolute; right: 3px; top: 20px; height: 20px; width: 20px; }
+        /* テーブル */
+        th { padding: 5px; white-space: nowrap; }
+        td { padding: 5px; }
+        /* スクロールバー */
+        ::-webkit-scrollbar { width: 5px; height: 5px }
+        ::-webkit-scrollbar-track { background-color: rgb(225, 247, 255) }
+        ::-webkit-scrollbar-thumb { background-color: rgb(174, 218, 236); border-radius: 5px; }
+    </style>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.180/build/three.module.js"
+                , "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.180/examples/jsm/controls/OrbitControls.js"
+                , "RoundedBoxGeometry": "https://cdn.jsdelivr.net/npm/three@0.180/examples/jsm/geometries/RoundedBoxGeometry.js"
+                ,"three/addons/": "https://cdn.jsdelivr.net/npm/three@0.177.0/examples/jsm/"
+                , "@pixiv/three-vrm": "https://cdn.jsdelivr.net/npm/@pixiv/three-vrm@3/lib/three-vrm.module.min.js"
+                , "CANNON": "https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/+esm"
+            }
+        }
+    </script>
+    <script type="module" src="./main.js"></script>
+    <script type="module-shim">
+    import * as ts from "typescript";
+    console.log(ts.transpile("const x: string = 'TS!'; console.log(x);"));
+    </script>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="row blue lighten-2 white-text valign-wrapper m0">
+        <div class="col s3">
+            <h5>Babylonia</h5>
+        </div>
+        <div class="col s9 ">
+            <div class="right valign-wrapper">
+                <div class="input-field col s9 p0">
+                    <input id="input_text" type="text" class="validate white m0" maxlength="10"
+                        style="height: 20px; line-height: 20px;" placeholder=" your name ">
+                </div>
+                <div class="col s4 p0">
+                    <button id="joinRoom" class="btn waves-effect waves-light z-depth-0 blue darken-1"
+                        style="margin-bottom: 3px; padding: 0px 5px; height: 20px; line-height: 20px; font-size: 50%;">
+                        入室
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Message -->
+    <div class="row">
+        <div class="col s12 yellow lighten-3 valign-wrapper center" style="height: 35px; width: 100%; ">
+            <h6 class="center-align m0" style=" line-height: 35px;">完成するまでお待ちください。</h6>
+            <button class="btn waves-effect waves-light btn-small green darken-1" type="submit" name="action">開始できません</button>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="row" style="padding: 0px 20px">
+        <!-- Quarry -->
+        <div class="col s3">
+            <div class="col s12 border2 valign-wrapper center" style="aspect-ratio: 1/1; position: relative;">
+                <span style="position: absolute; left:3px; top:0px;">Quarry</span>
+                ここに採掘場を描画
+                <!-- <canvas id="main"></canvas> -->
+            </div>
+            <div class="col s12 border1" style="margin-top: 10px;">
+                <div class="content">roomId: <span id="roomId"></span></div>
+                <div class="content">【カーソル位置】</div>
+                <div class="content">[hover object] <span id="hover-object"></span></div>
+                <div class="content">[hover pos] <span id="hover-pos"></span></div>
+                <div class="content">【クリック】</div>
+                <div class="content">[click object] <span id="click-object"></span></div>
+                <div class="content">[click pos] <span id="click-pos"></span></div>
+                <div class="content"><span id="clickinfo"></span></div>
+                <div class="content">【選択中】</div>
+                <div class="content">[selected] <span id="selected-object"></span></div>
+                <!-- <div class="content"><button id="confirm">確定</button></div>
+                <div class="content"><button id="reset">リセット</button></div> -->
+            </div>
+        </div>
+        <!-- Player Board -->
+        <div class="col s7">
+        <!-- <div class="col s12 yellow lighten-3 valign-wrapper center" style="height: 35px; width: 100%; ">
+            <h6 class="center-align m0" style=" line-height: 35px;">完成するまでお待ちください。</h6>
+            <button class="btn waves-effect waves-light btn-small green darken-1" type="submit" name="action">開始できません</button>
+        </div> -->
+            <div id="wrapper-canvas" class="col s9 border3 valign-wrapper center" style="aspect-ratio: 1/1; position: relative;">
+                <span style="position: absolute; left:3px; top:0px;">You</span>
+                <span style="position: absolute; right:3px; top:0px;">柱残数(小1/大2)</span>
+                <img src="./500.png" class="border1 stock-tile-main" />
+                <!-- ここにプレイヤーボードを描画 -->
+                <canvas id="canvas-id"></canvas>
+            </div>
+            <div class="col s3" style=" aspect-ratio: 1/1;">
+                <div class="col s12 p0 border1" style="aspect-ratio: 1/1; position: relative;">
+                    <img src="./500.png" class="responsive-img" />
+                    <span style="position: absolute; left:3px; top:0px;">playerA</span>
+                    <span style="position: absolute; right:3px; top:0px;">♜♜♜♜♜♜</span>
+                    <img src="./500.png" class="border1 stock-tile-sub" />
+                </div>
+                <div class="col s12 p0 border1" style="aspect-ratio: 1/1; margin-top:10px; position: relative;">
+                    <img src="./500.png" class="responsive-img" />
+                    <span style="position: absolute; left:3px; top:0px;">playerB</span>
+                    <span style="position: absolute; right:3px; top:0px;">♜♜♜</span>
+                    <img src="./500.png" class="border1 stock-tile-sub" />
+                </div>
+                <div class="col s12 p0 border1" style="aspect-ratio: 1/1; margin-top:10px; position: relative;">
+                    <img src="./500.png" class="responsive-img" />
+                    <span style="position: absolute; left:3px; top:0px;">playerC</span>
+                    <span style="position: absolute; right:3px; top:0px;">♜♜</span>
+                    <img src="./500.png" class="border1 stock-tile-sub" />
+                </div>
+            </div>
+        </div>
+        <div class="col s2">
+            <div class="row">
+                <!-- Game Info -->
+                <div class="collection-item light-blue lighten-5">
+                    <div class="card-content" style="padding: 10px 12px; font-size: 50%">
+                        ラウンド　 ：<span id="current-round">1</span>/<span id="max-round">14</span><br>
+                        プレイヤー ：<span id="current-player">nanoha</span><br>
+                        アクション ：<span id="current-action">タイル選択中</span><br>
+                    </div>
+                </div>
+                <!-- Player Info -->
+                <div class="row s3 light-blue lighten-5">
+                    <ul class="collection" style="margin-bottom: 0;">
+                        <li class="collection-item">PlayerA Info</li>
+                        <li class="collection-item">PlayerB Info</li>
+                        <li class="collection-item">PlayerC Info</li>
+                        <li class="collection-item">PlayerD Info</li>
+                    </ul>
+                </div>
+                <!-- Chat -->
+                <div class="row s3 light-blue lighten-5 border1">
+                    <ul id="chat-lan" class="collection m0" style="height: 180px; overflow-y: scroll; font-size: 10px; line-height: 1.5;"></ul>
+                    <div class="valign-wrapper m0">
+                        <div class="input-field col s12 p0">
+                            <input id="chat" type="text" class="validate white m0"
+                                style="height: 20px; line-height: 20px; font-size: 50%;" placeholder=" enter your message "
+                                maxlength="50" />
+                            <div style="position: absolute; font-size: 8px; color: skyblue; right:2px" aria-autocomplete="none">
+                                (<span id="chat-len">0</span>/50)
+                            </div>
+                            <script>
+                                const chat = document.getElementById('chat');
+                                const chatLAN = document.getElementById('chat-lan');
+                                const chatLen = document.getElementById('chat-len');
+                                chat.addEventListener('keydown', function (event) {
+                                    if (event.key === 'Enter') {
+                                        if (chat.value.trim()=="") return
+                                        chatLAN.innerHTML += `<li class="collection-item" style="padding: 0 5px; line-height: 1.6;">PlayerA | ${chat.value.trim()} </li>`;
+                                        chatLAN.scrollTop = chatLAN.scrollHeight;
+                                        chat.value = "";
+                                    } else {
+                                        chatLen.innerText = chat.value.length
+                                    }
+                                });
+                                chat.addEventListener('keyup', function (event) {
+                                    chatLen.innerText = chat.value.length
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- フッター -->
+    <footer class="page-footer" style="background-color: rgb(241, 251, 255); padding-bottom: 1px;">
+        <div class="container" style="width: 95%; ">
+            <div class="row">
+                <div class="col s12 p0 border1" style=" margin-top:10px;">
+                    <div class="row blue-text mb0">
+                        <style>
+                            hr { margin: 30px -10px 10px -10px; border: 1px dashed skyblue; border-bottom: none; }
+                            .tab .en { font-size: 60%; font-weight: lighter; letter-spacing: .1rem; text-transform: initial;}
+                            .tab-content .en { font-size: 70%; color: #78bbf2; font-weight: lighter; }
+                            .remarks { border: 1px dotted skyblue; padding: 5px 20px; margin-left: 20px; }
+                        </style>
+                        <div class="col s12">
+                            <ul id="tab0" class="tabs">
+                                <li class="tab col s4 p0 m0"><a href="#tab1">概要<br><span class="en">Summary</span></a></li>
+                                <li class="tab col s4 p0 m0"><a href="#tab2" class="active">プレイ方法<br><span class="en">How To Play</span></a></li>
+                                <li class="tab col s4 p0 m0"><a href="#tab3">ゲーム終了<br><span class="en">End Of The Game</span></a></li>
+                            </ul>
+                        </div>
+                        <div class="col s12 p0">
+                            <!-- 1. ゲーム概要 -->
+                            <div id="tab1" class="col s12">
+                                <ul class="tabs">
+                                    <li class="tab col s1 p0 m0 tabs-tab"></li>
+                                    <li class="tab col s2 p0 m0 tabs-tab"><a href="#tab1-1">バビロン<br><span class="en">Babylon</span></a></li>
+                                    <li class="tab col s2 p0 m0 tabs-tab"><a href="#tab1-2">コンポーネント<br><span class="en">Components</span></a></li>
+                                    <li class="tab col s2 p0 m0 tabs-tab"><a href="#tab1-3">テラスタイル<br><span class="en">Terrace Tiles</span></a></li>
+                                    <li class="tab col s2 p0 m0 tabs-tab"><a href="#tab1-4" class="active">プレイヤーボード<br><span class="en">Player Boards</span></a></li>
+                                    <li class="tab col s2 p0 m0 tabs-tab"><a href="#tab1-5">デザイン<br><span class="en">Design</span></a></li>
+                                    <li class="tab col s1 p0 m0 tabs-tab"><a href="#tab1-6"></a></li>
+                                </ul>
+                                <!-- 1.概要 - 1.バビロン -->
+                                <div id="tab1-1" class="col s12 tab-content">
+<p>紀元前6世紀、バビロンの王ネブカドネザル2世は、若き妻メディアのアミュティスを称えるために、無数の美しく香り高い花々に満ちた壮麗な庭園を作ろうとしました。</p>
+<p>彼は王国で最も名高い建築家たちを呼び集め、その才覚を試しつつ、自らの夢 ──後に「世界の七不思議」のひとつとして語り継がれる庭園を築くという壮大な構想── を実現させようとしたのです。</p>
+<br>
+<p>『バビロン』では、あなたは熟練した建築家としての役割を担います。</p>
+<p>採石場を掘り進め、最高の素材を見つけ出し、それらを巧みに使って自らの庭園を築き上げましょう。</p>
+<p>ゲームの終盤、王の前で最も見事な設計を披露した者こそが勝者とされ、「王国一の建築家」の称号を与えられるのです。</p>
+<img src="images/sample.png">
+
+<hr>
+<span class="en">
+<p>In the 6th century BC, Nebuchadnezzar II, king of Babylon, wanted to honor his young wife, Amytis of Media, with magnificent gardens featuring countless beautifully scented flowers.</p>
+<p>So, he called on the most respected architects in his kingdom to test their ingenuity and fulfill his vision of creating one of the Seven Wonders of the Ancient World.</p>
+<br>
+<p>In Babylon, you take on the role of a skilled architect.</p>
+<p>Excavate the quarry for the best materials and use them wisely to build your gardens.</p>
+<p>At the end of the game, the player who unveils the most impressive design before the king will be declared the winner and crowned the Greatest Architect in the Kingdom.</p>
+                                    </span>
+                                </div>
+                                <!-- 1.概要 - 2.コンポーネント -->
+                                <style>
+                                    #tab1-2 .card-image {height: 140px; padding: 10px; border:1px skyblue dotted}
+                                    #tab1-2 .card-content {padding-top: 10px; text-align: center;}
+                                    #tab1-2 img { object-fit: contain; height: 100%;}
+                                </style>
+                                <div id="tab1-2" class="col s12 tab-content">
+                                    <div class="row m0">
+                                        <div class="col s2 card z-depth-0">
+                                            <div class="card-image"><img src="images/playerBoard.png" ></div>
+                                            <div class="card-content"><p>プレイヤーボード</p><p>4枚</p></div>
+                                        </div>
+                                        <div class="col s2 card z-depth-0">
+                                            <div class="card-image"><img src="images/startingTiles.png"></div>
+                                            <div class="card-content"><p>開始テラスタイル</p><p>4枚</p></div>
+                                        </div>
+                                        <div class="col s2 card z-depth-0">
+                                            <div class="card-image"><img src="images/TerraceTiles.png"></div>
+                                            <div class="card-content"><p>テラスタイル</p><p>48枚</p></div>
+                                        </div>
+                                        <div class="col s2 card z-depth-0">
+                                            <div class="card-image"><img src="images/roundToken.png" style="scale:50%"></div>
+                                            <div class="card-content"><p>ラウンドトークン</p><p>14枚</p></div>
+                                        </div>
+                                        <div class="col s2 card z-depth-0">
+                                            <div class="card-image"><img src="images/GameEndToken.png" style="scale:70%"></div>
+                                            <div class="card-content"><p>終了トークン</p><p>1枚</p></div>
+                                        </div>
+                                        <div class="col s2 card z-depth-0">
+                                            <div class="card-image"><img src="images/ScorePad.png" ></div>
+                                            <div class="card-content"><p>スコアパッド</p><p>1枚</p></div>
+                                        </div>
+                                    </div>
+                                    <div class="row m0">
+                                        <div class="col s3 card z-depth-0">
+                                            <div class="card-image"><img src="images/quarry.png" style="scale:70%"></div>
+                                            <div class="card-content"><p>採掘場</p><p>1個</p></div>
+                                        </div>
+                                        <div class="col s3 card z-depth-0">
+                                            <div class="card-image"><img src="images/singlePillar.png" style="scale:70%"></div>
+                                            <div class="card-content"><p>シングル柱</p><p>148枚</p></div>
+                                        </div>
+                                        <div class="col s3 card z-depth-0">
+                                            <div class="card-image"><img src="images/doublePillar.png" style="scale:70%"></div>
+                                            <div class="card-content"><p>ダブル柱</p><p>60枚</p></div>
+                                        </div>
+                                        <div class="col s3 card z-depth-0">
+                                            <div class="card-image"><img src="images/belvederes.png" style="scale:70%"></div>
+                                            <div class="card-content"><p>展望台</p><p>38枚</p></div>
+                                        </div>
+                                    </div>
+                                    <div class="row m0">
+                                        <div class="col s3 card z-depth-0">
+                                            <div class="card-image"><img src="images/stairway.png" style="scale:70%"></div>
+                                            <div class="card-content"><p>階段</p><p>38枚</p></div>
+                                        </div>
+                                        <div class="col s3 card z-depth-0">
+                                            <div class="card-image"><img src="images/fountain.png" style="scale:70%"></div>
+                                            <div class="card-content"><p>噴水</p><p>15枚</p></div>
+                                        </div>
+                                        <div class="col s3 card z-depth-0">
+                                            <div class="card-image"><img src="images/statue.png" style="scale:70%"></div>
+                                            <div class="card-content"><p>彫像</p><p>38枚</p></div>
+                                        </div>
+                                        <div class="col s3 card z-depth-0">
+                                            <div class="card-image"><img src="images/bridge.png" style="scale:70%"></div>
+                                            <div class="card-content"><p>橋</p><p>15枚</p></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 1.概要 - 3.テラスタイル -->
+                                <div id="tab1-3" class="col s12 tab-content">
+<p>各テラスタイルには、<b>「素材面」</b>と<b>「庭園面」</b>の2つの面があります。</p>
+<p>テラスタイルには、<b>「建築シンボル」</b>と<b>（プレイヤー毎の）「花」</b>という、2種類の情報が描かれています。</p>
+<p>タイルの両面には、同じシンボルと同じ花が描かれています。</p>
+<p>なお、最初に配られる4枚のテラスタイルには「素材面」はなく、それぞれのプレイヤーの花の種類のみが描かれています。</p>
+<img src="images/TerraceTileSide.png">
+<p>素材面には、<b>「粘土」</b>、<b>「花崗岩」</b>、<b>「玄武岩」</b>の3種類があります。</p>
+<p>粘土タイルにはシンボルが2つ、花崗岩タイルには3つ、玄武岩タイルには4つ描かれています。</p>
+<img src="images/TerraceTileTypes.png">
+<p>庭園面は4種類あり、それぞれが4人のプレイヤーボードに対応しています。</p>
+<img src="images/TerraceTileGardenSide.png">
+<hr>
+<span class="en">
+<p>Each Terrace tile has a Material side and a Garden side.</p>
+<p>Terrace tiles contain 2 pieces of information: building symbols and flowers that match the different player boards.</p>
+<p>Both sides of a tile show the same symbols and the same flower.</p>
+<p>The 4 starting Terrace tiles do not have a Material side; they show the player’s flower type instead.</p>
+<br>
+<p>There are 3 types of Material side:Clay, Granite, and Basalt.</p>
+<p>Clay tiles have 2 symbols, Granite tiles 3, and Basalt tiles 4.</p>
+<br>
+<p>There are 4 Garden sides, corresponding to the 4 player boards</p>
+</span>
+                                </div>
+                                <div id="tab1-4" class="col s12 tab-content">
+<p>プレイヤーボードは、次の2つのエリアに分かれています。</p>
+<p>・<b>建築エリア</b>：柱を安定して立てられるよう、8×8のくぼみがあります。ここに柱を立てて、自分の庭園を築いていきます。</p>
+<p>・<b>保管エリア</b>：柱を1本ずつ保管できるスペースが6つと、テラスタイルを1枚保管できるスロットがあります。</p>
+<hr>
+<span class="en">
+Player boards are divided into 2 areas:<br>
+‐ The building area has 64 notches in which to place pillars, so they remain stable and upright. This is where you build your garden.<br>
+‐ The storage area has 6 spaces for storing single pillars, and a slot for storing a Terrace tile for later use.<br>
+</span>
+
+                                </div>
+                                <div id="tab1-5" class="col s12 tab-content">
+<span class="en">
+<p>Designer: Olivier Grégoire</p>
+<p>Illustrator: The Creation Studio</p>
+<p>3D modeler: Matthias Klein</p>
+<p>Graphic designer: Fabrice Beghin</p>
+</span>
+                                </div>
+                                <div id="tab1-6" class="col s12 tab-content">なにもないよ</div>
+                            </div>
+
+
+                            <!-- 2. ゲームルール -->
+                            <div id="tab2" class="col s12">
+                                <ul class="tabs">
+                                    <li class="tab col s2 p0 m0 tabs-tab"><a href="#tab2-1">大まかな流れ<br><span class="en">Game Progress</span></a></li>
+                                    <li class="tab col s2 p0 m0 tabs-tab"><a href="#tab2-2">0. 準備<br><span class="en">Setup</span></a></li>
+                                    <li class="tab col s2 p0 m0 tabs-tab"><a href="#tab2-3" class="active">1. 採掘<br><span class="en">Quarry</span></a></li>
+                                    <li class="tab col s2 p0 m0 tabs-tab"><a href="#tab2-4">2. 柱＆タイル<br><span class="en">Pillars & Terrace Tile</span></a></li>
+                                    <li class="tab col s2 p0 m0 tabs-tab"><a href="#tab2-5">3. 装飾<br><span class="en">Decoative Items</span></a></li>
+                                    <li class="tab col s2 p0 m0 tabs-tab"><a href="#tab2-6">4. ラウンドトークン<br><span class="en">Round Token</span></a></li>
+                                </ul>
+                                <!-- 大まかな流れ -->
+                                <div id="tab2-1" class="col s12 tab-content">
+ゲームはプレイヤー人数に応じて、以下のラウンド数で進行します：<br>
+<div class="remarks">
+    2人プレイ：15ラウンド<br>
+    3人プレイ：13ラウンド<br>
+    4人プレイ：11ラウンド<br>
+</div>
+スタートプレイヤーから順に時計回りで手番を行います。<br>
+
+各プレイヤーの手番では、次の手順で行動します：<br>
+<div class="remarks">
+    A. 掘削アクション（Digging） を必ず行う。<br>
+    B. 建設アクション（Building） を任意で行うことができる。<br>
+    C. 未使用のアイテムを保管または破棄 しなければならない。<br>
+</div>
+<hr>
+<span class="en">
+The game plays over a number of rounds depending on the number of players: <br>
+15 rounds with 2 players, 13 rounds with 3 players, and 11 rounds with 4 players.<br>
+Starting with the first player and moving clockwise, during their turn each player:<br>
+A. must perform a digging action;<br>
+B. may perform a building action;<br>
+C. must store and/or discard any unused items.<br>
+</span>
+                                </div>
+                                <!-- 準備 -->
+                                <div id="tab2-2" class="col s12 tab-content">
+<p>1. 箱をテーブルの中央に置きます。 これが<b>「供給エリア」</b>（サプライ）と<b>「採石場」</b>になります。</p>
+<p>2. 供給エリアをセットします。シングル柱・ダブル柱を並べ、展望台・階段・噴水・彫像・橋を並べます。</p>
+<p>3. 採石場をセットします。 テラスタイルを「素材面」を上にして、次のように3層に重ねます。</p>
+<div class="remarks">
+    1. 玄武岩（Basalt）タイル16枚をランダムに並べて最下層を作ります。<br>
+    2. その上に花崗岩（Granite）タイル16枚をランダムに配置します。<br>
+    3. 粘土（Clay）タイル16枚をランダムに並べ、最上層を完成させます。<br>
+</div>
+<p>4. プレイヤーボードを選び、手前に置きます。 そのボードに対応する「花の種類」が描かれたスタート用テラスタイルを取り、ボードの保管エリアのスロットにセットします。</p>
+<p>5. ラウンドトークンを裏向きにしてシャッフルします。</p>
+<div class="remarks">
+    プレイ人数に応じてランダムにトークンを取ります：2人プレイなら14枚、3人なら12枚、4人なら10枚。<br>
+    それらをゲームエンドトークンの上に重ねて置き、残りはゲームから除外します。<br>
+    スタートプレイヤーを決め、ラウンドトークンの山をその右隣のプレイヤーの前に置きます。<br>
+</div>
+
+<p>6. 採石場をプレイ人数に合わせて調整します。</p>
+<div class="remarks">
+    3人プレイの場合：粘土タイルを3枚取り除きます。スタートプレイヤーから時計回りに、各プレイヤーが好きな粘土タイルを1枚ずつ除外します。<br>
+    2人プレイの場合：粘土タイルを6枚取り除きます。スタートプレイヤーから順に1枚ずつ除外し、これを2回繰り返します。<br>
+</div>
+<hr>
+<span class="en">
+    <p>1. Place the box in the center of the table; this will form the supply and quarry.</p>
+    <p>2. Lay out the single and double pillars in the supply, along with the belvederes, stairways, fountains, statues, and bridges.</p>
+    <p>3. Set up the quarry by placing the 48 Terrace tiles – Material side up – in 3 different layers:</p>
+    <p>    • First, randomly spread the 16 Basalt tiles across the bottom of the quarry.</p>
+    <p>    • Then randomly spread the 16 Granite tiles on top of the Basalt tiles.</p>
+    <p>    • Finally, randomly spread the 16 Clay tiles on top of the Granite tiles.</p>
+    <p>4. Choose a player board and place it in front of you. <br>Then pick up the corresponding starting Terrace tile (matching flowers) and place it in the slot of your</p>
+    <p>board’s storage area.</p>
+    <p>5. Shuffle the Round tokens face down and select 14/12/10 at random, if playing with 2/3/4 players, respectively. <br>Without revealing them, stack them on the</p>
+    <p>Game End token. Remove any unused Round tokens from the game.</p>
+    <p>Choose any player to go first and place the stack of Round tokens in front of the player to their right.</p>
+    <p>6. Adjust the quarry to the number of players:</p>
+    <p>• In a 3-player game, remove 3 Clay tiles from the quarry: starting with the first player and moving clockwise, each player removes 1 tile of their choice.</p>
+    <p>• In a 2-player game, remove 6 Clay tiles from the quarry: starting with the first player, each player removes 1 tile of their choice. Repeat this step twice.</p>
+</span>
+                                </div>
+                                <!-- 採掘 -->
+                                <div id="tab2-3" class="col s12 tab-content">
+<p>採石場から見えているテラスタイルを1枚取ります。</p>
+<div class="remarks">※「見えている」とは、他のタイルに覆われていない状態のことです。</div>
+<p>テラスタイルを取ると、直ちに1段柱を1本受け取ります。その本数は以下の条件で決まります：</p>
+<div class="remarks">
+    ・隣接するタイルが同じ層または下の層<br>
+    ・採石場の端に接しているタイルの辺<br>
+    ・採石場の底面に接しているタイルの辺<br>
+    ・取ったテラスタイルの花が、自分のプレイヤーボードの花と一致する場合<br>
+</div>
+<hr>
+<span class="en">
+<p>Take a visible Terrace tile from the quarry. A tile is deemed to be visible when it is not covered by another tile.</p>
+<p>You immediately receive 1 single pillar:</p>
+<p>
+‐ for each tile edge bordering 1 visible tile on the same level or lower.<br>
+‐ for each tile edge bordering the edge of the quarry.<br>
+‐ for each tile edge bordering the bottom of the quarry.<br>
+‐ if the flower on the Terrace tile matches the one on your player board.<br>
+</p>
+
+<p>Example:</p>
+<p>
+    Linda (white flower) takes Granite tile, and immediately receives 3 single pillars:<br>
+    - 1 for the bordering Granite tile on the same level;<br>
+    - 1 for the bordering Basalt tile on the level below;<br>
+    - 1 for the bottom of the quarry.<br>
+    Linda receives no pillars for the bordering Clay tile since it is on a higher level.<br>
+</p>
+<p>
+    John (pink flower ) takes Basalt tile B, and immediately receives 3 single pillars:<br>
+    - 1 for the edge of the quarry;<br>
+    - 1 for the Basalt tile on the same level;<br>
+    - 1 because the tile John chose matches the flower type on his board.<br>
+    John receives no pillars for the bordering Clay and Granite tiles since they are on higher levels<br>
+</p>
+</span>
+                                </div>
+                                <div id="tab2-4" class="col s12 tab-content">
+<hr>
+<span class="en">
+After digging, you can place the Terrace tile you just chose AND/OR the Terrace tile in your storage area.<br>
+You must place pillars before placing a Terrace tile. A (single or double) pillar must be placed on an empty space on a player board or a Terrace tile.<br>
+The building area on your player board has 64 notches for placing pillars.<br>
+The Garden side of Terrace tiles has 4 spaces for placing pillars (with or without symbols).<br>
+You can swap 2 single pillars for 1 double pillar at any time. However, a double pillar cannot be swapped for 2 single pillars.<br>
+Once your pillars are in position, place your Terrace tile, following these rules:<br>
+‐ A Terrace tile may be placed Garden side up on 3 or 4 pillars. If you only use 3 pillars, place a Belvedere immediately on the corner of the tile not resting on a pillar.<br>
+‐ 2 Terrace tiles may never overlap completely.<br>
+‐ A Terrace tile may rest entirely or partially on double pillars when it is placed. For example, a tile can rest on 2 single pillars placed on a first-level tile and 2<br>
+double pillars placed on the player board.<br>
+</span>
+                                </div>
+                                <div id="tab2-5" class="col s12 tab-content">tab2-5</div>
+                                <div id="tab2-6" class="col s12 tab-content">tab2-6</div>
+                            </div>
+                            <div id="tab3" class="col s12">
+                                <ul class="tabs">
+                                    <li class="tab col s2 p0 m0 tabs-tab"><a href="#tab3-1">ゲームルール<br><span class="en">GameRule</span></a></li>
+                                </ul>
+                                <div id="tab3-1" class="col s12 tab-content">tab1-1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var el = document.querySelectorAll('.tabs');
+            var instance = M.Tabs.init(el, {});
+        });
+    </script>
+</body>
+
+</html>
