@@ -30,7 +30,7 @@ const Tabs = ({id, list}: TabsType) => {
                     )}
                 </ul>
                 {list.map(({content, hasTab}, index) => content &&
-                    <div id={`${id}-${index}`} className={`col s12 ${hasTab ? "p0" : "tab-content"}`}>
+                    <div id={`${id}-${index}`} className={`col s12 ${hasTab ? "p0" : "tab-content"}`} key={index}>
                         {content}
                     </div>
                 )}

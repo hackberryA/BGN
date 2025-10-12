@@ -90,8 +90,8 @@ const components = [
 ]
 const ComponentsView = () => <>
     <div className="row m0">
-        {components.map(({col, image, name, amount, scale}) => 
-            <div className={`col s${col} card z-depth-0`}>
+        {components.map(({col, image, name, amount, scale}, index) => 
+            <div className={`col s${col} card z-depth-0`} key={index}>
                 <div className="card-image"><img src={`images/${image}`} style={{scale: scale}}/></div>
                 <div className="card-content" style={{whiteSpace: "nowrap"}}><p>{name}</p><p>{amount}</p></div>
             </div>

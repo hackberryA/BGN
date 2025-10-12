@@ -1,3 +1,10 @@
+```
+git add .
+git commit -m "commit"
+git push
+```
+
+
 ## ステップ①：プロジェクト初期化
 ```bash
 npm init -y

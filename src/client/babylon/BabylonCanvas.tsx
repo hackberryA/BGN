@@ -6,6 +6,7 @@ import PlayerBoard from "./meshes/PlayerBoard";
 import { SinglePillar } from "./meshes/SinglePillar";
 import { DoublePillar } from "./meshes/DoublePillar";
 import { Stairway } from "./meshes/Stairway";
+import { VRMModel } from "./meshes/VRMModel";
 
 const width = 20;
 const height = 16;
@@ -78,6 +79,7 @@ const Scene = () => {
         <PlayerBoard width={width} />
         {/* コンポーネント */}
         <Components/>
+        <VRMModel height={height * 3} />
       </mesh>
     </group>
   );
