@@ -1,41 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>Board Game</title>
-</head>
-<body>
-  <h1>部屋を作る</h1>
-  <button id="createBtn">部屋を作成</button>
-  <p id="roomLink"></p>
-  <a id="roomUrl" href="/" ></a>
-  <script>
-    let protocol = "wss";
-    switch (location.host) {
-      case "localhost:3000":
-      case "localhost:5500":
-      case "127.0.0.1:3000":
-      case "127.0.0.1:5500":
-        protocol = "ws"
-    }
-    const ws = new WebSocket(`${protocol}://${location.host}`);
-
-    // 部屋作成ボタン
-    document.getElementById("createBtn").onclick = () => {
-      ws.send(JSON.stringify({ type: "createRoom" }));
-    };
-
-    // メッセージ受信
-    ws.onmessage = (msg) => {
-      const data = JSON.parse(msg.data);
-
-      // 部屋作成
-      if (data.type === "roomCreated") {
-        const url = `${location.origin}/room/?r=${data.roomId}`;
-        document.getElementById("roomUrl").innerHTML = url;
-        document.getElementById("roomUrl").href = url;
-      }
-    };
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Board Game</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="/bundle.js"></script>
+  </body>
 </html>

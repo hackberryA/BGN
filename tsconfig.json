@@ -1,15 +1,18 @@
 {
   "compilerOptions": {
-    // コンパイル後のJavaScriptのバージョン
-    "target": "ESNext",
-    // モジュールシステム
-    "module": "NodeNext",
-    // .ts拡張子を持つファイルのインポートを可能に
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
-    // モジュール解決の際に、TypeScriptの構文を厳密に解釈
-    "verbatimModuleSyntax": false,
-    // すべての厳格な型チェックオプションを有効に
-    "esModuleInterop": true
-  }
+    "target": "ES6",
+    // "module": "ESNext",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    // "ignoreDeprecations": "6.0",
+    "strict": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist"
+  },
+  "include": ["src", "src/client/babylon/js"]
+  
 }
+

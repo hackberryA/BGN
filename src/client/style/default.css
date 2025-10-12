@@ -1,0 +1,48 @@
+
+/* default: 16px */
+html { font-size: 80%; }
+.p0 { padding: 0 !important; }
+.m0 { margin: 0 !important; }
+.mb0 { margin-bottom: 0 !important; }
+.center { justify-content: center; }
+.btn-small { height: 25px; line-height: 25px; padding: 0 10px; }
+.border1 { border: 1px skyblue solid; }
+.border2 { border: 2px skyblue solid; }
+.border3 { border: 3px skyblue solid; }
+/* タブ設定 */
+.tabs { height: 35px; border-bottom: 1px skyblue solid; }
+.tabs .tab { line-height: 10px; white-space-collapse: collapse;}
+.tabs .tab a { padding-top: 8px; color: #2196F3; text-overflow: inherit;}
+.tabs .tab a.active { color: #008cff; background-color: #def0ff; }
+.tabs .tab a:hover { color: #2196F3; background-color: #def0ff; }
+.tabs .tab a:focus, .tabs .tab a:focus.active { color: #008cff; background-color: #def0ff; }
+.tabs .indicator { display: none; }
+.tabs-tab { padding: 0; }
+.tab-content { 
+    color: rgb(72, 167, 204);
+    margin-top: 5px;
+    font-size: 90%;
+    overflow-x: hidden;
+    line-height: 18px;
+    background-color: white;
+    height: 500px;
+}
+/* ストックタイル画像 */
+.stock-tile-main { position: absolute; right: 2px; top: 20px; height: 40px; width: 40px; }
+.stock-tile-sub { position: absolute; right: 3px; top: 20px; height: 20px; width: 20px; }
+/* テーブル */
+th { padding: 5px; white-space: nowrap; }
+td { padding: 5px; }
+/* スクロールバー */
+::-webkit-scrollbar { width: 5px; height: 5px }
+::-webkit-scrollbar-track { background-color: rgb(225, 247, 255) }
+::-webkit-scrollbar-thumb { background-color: rgb(174, 218, 236); border-radius: 5px; }
+
+hr { margin: 30px -10px 10px -10px; border: 1px dashed skyblue; border-bottom: none; }
+.tab .en { font-size: 60%; font-weight: lighter; letter-spacing: .1rem; text-transform: initial;}
+.tab-content .en { font-size: 70%; color: #78bbf2; font-weight: lighter; }
+.remarks { border: 1px dotted skyblue; padding: 5px 20px; margin-left: 20px; }
+
+#tab1-2 .card-image {height: 140px; padding: 10px; border:1px skyblue dotted}
+#tab1-2 .card-content {padding-top: 10px; text-align: center;}
+#tab1-2 img { object-fit: contain; height: 100%;}
