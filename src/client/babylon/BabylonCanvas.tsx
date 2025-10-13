@@ -1,44 +1,51 @@
-import React, { useEffect, useRef } from "react";
-import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import { Canvas, useThree } from "@react-three/fiber";
+import { JSX, useEffect, useRef } from "react";
 import * as THREE from "three";
+import { DoublePillar } from "./meshes/DoublePillar";
 import PlayerBoard from "./meshes/PlayerBoard";
 import { SinglePillar } from "./meshes/SinglePillar";
-import { DoublePillar } from "./meshes/DoublePillar";
 import { Stairway } from "./meshes/Stairway";
-import { VRMModel } from "./meshes/VRMModel";
+import { useRoomData } from "./hooks/useRoomData";
 
 const width = 20;
 const height = 16;
+const data = new Map()
 
-const Components = () => {
-  const data = [
-    {position: {x:5, y:0, z:5}, type: "single-pillar"},
-    {position: {x:7, y:0, z:7}, type: "double-pillar"},
-    {position: {x:7, y:0, z:5}, type: "stairway"},
-    {position: {x:7, y:0, z:0}, type: "stairway", direction: 0},
-    {position: {x:7, y:0, z:1}, type: "stairway", direction: 1},
-    {position: {x:7, y:0, z:2}, type: "stairway", direction: 2},
-    {position: {x:7, y:0, z:3}, type: "stairway", direction: 3},
-  ]
-  return data.map(
-    ({position, type, direction}) => {
-      const x = width * (position.x - 3.5);
-      const y = height * position.y + 1;
-      const z = width * (position.z - 3.5);
-      switch (type) {
-        case "single-pillar": return <SinglePillar width={width} height={height} position={[x,y,z]}/>
-        case "double-pillar": return <DoublePillar width={width} height={height} position={[x,y,z]}/>
-        case "stairway": return <Stairway width={width} height={height} position={[x,y,z]} direction={direction}/>
-      }
-      return <></>
+type PlayerInfo = {playerId: string}
+const Components = ({playerId}: PlayerInfo) => {
+  const roomData = useRoomData();
+  const playerData = roomData.getPlayerInfo(playerId)
+
+  for (var x=0; x<8; x++) {
+    for (var z=0; z<8; z++) {
+      data.set(`${x},0,${z}`, {position: {x:x, y:0, z:z}, type: "single-pillar", direction: 0})
     }
-  )    
+  }
+  const list: JSX.Element[] = [];
+  data.forEach(({position, type, direction}, key) => {
+        const x = width * (position.x - 3.5);
+        const y = height * position.y + 1;
+        const z = width * (position.z - 3.5);
+        switch (type) {
+          case "single-pillar": list.push(<SinglePillar width={width} height={height} position={[x,y,z]}/>);break;
+          case "double-pillar": list.push(<DoublePillar width={width} height={height} position={[x,y,z]}/>);break;
+          case "stairway": list.push(<Stairway width={width} height={height} position={[x,y,z]} direction={direction}/>);break;
+        }
+  })
+  return list
 }
 
-const Scene = () => {
-  const { gl, camera, size } = useThree();
+const Scene = ({playerId}: PlayerInfo) => {
+  const { gl, camera, raycaster } = useThree();
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    camera.layers.enable(0)
+    camera.layers.enable(1)
+    raycaster.layers.enable(1); // クリック対象を Layer 1 のみに限定
+    raycaster.layers.disable(0); // UI層など、反応させたくない層は無効
+  }, [gl, camera, raycaster]);
 
   // 出力カラースペースとアンチエイリアス設定
   useEffect(() => {
@@ -74,22 +81,26 @@ const Scene = () => {
       {/* シーン内ライト */}
       <ambientLight intensity={1} />
       <directionalLight position={[10, 20, 10]} intensity={2} castShadow />
-      <mesh>
+      <mesh 
+        // onClick={(e) => console.log("Clicked mesh", e.object.parent?.name)} 
+        // onPointerOver={(e) => console.log("Over mesh", e.object.parent?.name)}
+        // onPointerLeave={(e) => console.log("Leave mesh", e.object.parent?.name)}
+        >
         {/* ボード */}
         <PlayerBoard width={width} />
         {/* コンポーネント */}
-        <Components/>
-        <VRMModel height={height * 3} />
+        <Components playerId={playerId}/>
+        {/* <ClickableBoard /> */}
       </mesh>
     </group>
   );
 };
 
-export const BabylonCanvas = () => {
+export const BabylonCanvas = ({playerId}: PlayerInfo) => {
   const containerRef = useRef(null)
   return (
     <div
-      id="wrapper-canvas"
+      id={`wrapper-canvas-${playerId}`}
       ref={containerRef}
       style={{
         width: "100%",
@@ -103,7 +114,7 @@ export const BabylonCanvas = () => {
         shadows
         camera={{ position: [200, 100, 100], fov: 45, near: 0.1, far: 10000 }}
       >
-        <Scene />
+        <Scene playerId={playerId} />
         <OrbitControls
           enablePan
           enableRotate

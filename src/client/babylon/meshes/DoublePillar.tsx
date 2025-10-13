@@ -53,7 +53,7 @@ export function DoublePillar({ width, height, position }: componentType) {
           position={[0, 2, 0]}
       />
       {/* HitBox */}
-      <mesh>
+      <mesh layers={1}>
         <boxGeometry args={[width, 2, width]} />
         <meshBasicMaterial color="red" transparent opacity={0.1} />
       </mesh>

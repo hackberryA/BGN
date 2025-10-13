@@ -12,7 +12,9 @@
   "dependencies": {
     "@pixiv/three-vrm": "^3.4.2",
     "@pixiv/three-vrm-animation": "^3.4.2",
-    "yaml": "^2.8.1"
+    "@tweenjs/tween.js": "github:tweenjs/tween.js",
+    "yaml": "^2.8.1",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.6.1",

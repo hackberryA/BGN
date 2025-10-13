@@ -1,5 +1,6 @@
 import Tabs from "../../components/materialize/Tabs";
 import TabsTab from "../../components/materialize/Tabs";
+import { VRMModelCanvas } from "../meshes/VRMModel";
 // import rule from '../config/rule.yml';
 // console.log("rule", rule)
 const Footer = () => {
@@ -17,7 +18,7 @@ const Footer = () => {
                                 { col:2, title: {ja: "テラスタイル", en: "Terrace Tiles"}, content: <TerraceTilesDescription/>},
                                 { col:2, title: {ja: "プレイヤーボード", en: "Player Boards"}, content: <PlayerBoardsDescription/>},
                                 { col:2, title: {ja: "ゲームデザイン", en: "Game Design"}, content: <DesignersView/>},
-                                { col:1, title: {ja: "", en: ""}, content: <SecretView/>},
+                                { col:1, title: {ja: "", en: ""}, content: <VRMModelCanvas/>},
                             ]} />
                         },
                         { 
@@ -152,8 +153,6 @@ const DesignersView = () => <>
         <br/>
     </span>
 </>
-const SecretView = () => <></>
-
 
 const GameProgress = () => <>
     <p>ゲームはプレイヤー人数に応じて、以下のラウンド数で進行します：</p>

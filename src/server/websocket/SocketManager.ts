@@ -25,12 +25,7 @@ export class SocketManager {
     logger.info(`✅ Client connected: ${id}`);
 
     ws.on("message", (raw) => {
-      try {
-        const msg = JSON.parse(raw.toString()) as ClientMessage;
-        this.router.handleMessage(id, msg);
-      } catch (e) {
-        logger.error("Invalid message format", e);
-      }
+        this.router.handleMessage(id, JSON.parse(raw.toString()) as ClientMessage);
     });
 
     ws.on("close", () => {

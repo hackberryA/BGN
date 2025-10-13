@@ -1,9 +1,12 @@
 export interface ClientMessage {
   type: string;
-  payload?: any;
+  playerId?: string;
+  log?: string;
 }
 
 export interface ServerMessage {
   type: string;
-  payload?: any;
+  playerId?: string;
+  clientId?: string;
+  log?: string;
 }

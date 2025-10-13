@@ -9,23 +9,6 @@ import Home from "./components/Home";
 import Babylon from "./babylon/Babylon";
 
 const App = () => {
-  useEffect(() => {
-    const ws = new WebSocket("ws://localhost:8080");
-
-    ws.onopen = () => {
-      console.log("open");
-      ws.send("Hello from client!");
-    };
-
-    ws.onmessage = (event) => {
-      console.log("from server:", event.data);
-    };
-
-    ws.onclose = () => console.log("close");
-
-    return () => ws.close();
-  }, []);
-
   return (
     <BrowserRouter>
       <Routes>

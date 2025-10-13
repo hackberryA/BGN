@@ -1,7 +1,16 @@
 import { BabylonCanvas } from "../BabylonCanvas";
+import { useRoomData } from "../hooks/useRoomData";
+import { useSocketContext } from "../hooks/useWebSocket";
 
 
 const Content = () => {
+    const roomData = useRoomData();
+    const { send } = useSocketContext();
+    const sendLog = () => {
+        roomData.addLog("test");
+        send({ type: "log", payload: { log: "test" } });
+    }
+
     // <script>
     //     const chat = document.getElementById('chat');
     //     const chatLAN = document.getElementById('chat-lan');
@@ -30,20 +39,12 @@ const Content = () => {
                     ここに採掘場を描画
                     {/* <canvas id="main"></canvas> */}
                 </div>
-                <div className="col s12 border1" style={{marginTop: "10px"}}>
-                    <div className="content">roomId: <span id="roomId"></span></div>
-                    <div className="content">【カーソル位置】</div>
-                    <div className="content">[hover object] <span id="hover-object"></span></div>
-                    <div className="content">[hover pos] <span id="hover-pos"></span></div>
-                    <div className="content">【クリック】</div>
-                    <div className="content">[click object] <span id="click-object"></span></div>
-                    <div className="content">[click pos] <span id="click-pos"></span></div>
-                    <div className="content"><span id="clickinfo"></span></div>
-                    <div className="content">【選択中】</div>
-                    <div className="content">[selected] <span id="selected-object"></span></div>
-                    {/* <div className="content"><button id="confirm">確定</button></div>
-                    <div className="content"><button id="reset">リセット</button></div> */}
+                <div className="col s12 border1 p0" style={{marginTop: "10px"}}>
+                    {roomData.logs.map((v) => 
+                    <div className="col s12 border1">{v}</div>
+                    )}
                 </div>
+                <button className="btn" onClick={sendLog}>ログを追加</button>
             </div>
             {/* Player Board */}
             <div className="col s7">
@@ -56,7 +57,7 @@ const Content = () => {
                     <span style={{position: "absolute", right:"3px", top:"0px", zIndex:10}}>♜♜</span>
                     <img src="/images/500.png" className="border1 stock-tile-main" style={{zIndex:10}} />
                     {/* ここにプレイヤーボードを描画 */}
-                    <BabylonCanvas />
+                    <BabylonCanvas playerId="test" />
                 </div>
                 <div className="col s3" style={{aspectRatio: "1/1"}}>
                     <div className="col s12 p0 border1" style={{aspectRatio: "1/1", position: "relative"}}>

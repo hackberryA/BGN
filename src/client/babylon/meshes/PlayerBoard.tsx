@@ -9,7 +9,6 @@ export const PlayerBoard = ({ width }: {width: number}) => {
 
   return (
     <>
-    <gridHelper args={[width * 8, 8, "#eeeeee", "#eeeeee"]} />
     <mesh
       name="playerBoard"
       userData={{ component: "PLAYER_BOARD" }}
@@ -19,6 +18,7 @@ export const PlayerBoard = ({ width }: {width: number}) => {
       position={[0, -1, 0]}
       receiveShadow
       />
+      <gridHelper args={[width * 8, 8, "#eeeeee", "#eeeeee"]} />
     </>
   );
 };
