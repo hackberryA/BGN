@@ -1,12 +1,6 @@
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import { useEffect } from "react";
-import { BabylonCanvas } from "./babylon/BabylonCanvas";
-// import { SceneManager } from "./threejs/SceneManager";
-// import { GameHUD } from "./ui/GameHUD";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./components/Home";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Babylon from "./babylon/Babylon";
+import Home from "./components/Home";
 
 const App = () => {
   return (
@@ -14,6 +8,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/babylon" element={<Babylon />} />
+        <Route path="/babylon/:roomId" element={<Babylon />} />
       </Routes>
     </BrowserRouter>
   );

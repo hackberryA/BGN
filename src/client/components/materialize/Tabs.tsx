@@ -22,7 +22,7 @@ const Tabs = ({id, list}: TabsType) => {
                 <ul className="tabs">
                     {list.map(({col, title}, index) =>
                         <li className={`tab col s${col} p0 m0 tabs-tab`} key={index}>
-                            {title && <a href={`#${id}-${index}`}>
+                            {title && <a href={`#${id}-${index}`} className={`${title.ja ? "" : "active" }`}>
                                 {title.ja}<br/>
                                 <span className="en">{title.en}</span>
                             </a>}

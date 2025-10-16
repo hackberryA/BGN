@@ -1,15 +1,11 @@
 import { BabylonCanvas } from "../BabylonCanvas";
-import { useRoomData } from "../hooks/useRoomData";
-import { useSocketContext } from "../hooks/useWebSocket";
+import { BabylonRoomData, useBabylonRoomData } from "../../hooks/useBabylonRoomData";
+import { useSocketContext } from "../../hooks/useWebSocket.tsx";
 
 
-const Content = () => {
-    const roomData = useRoomData();
+type ContentType = {roomData: BabylonRoomData}
+const Content = ({roomData}: ContentType) => {
     const { send } = useSocketContext();
-    const sendLog = () => {
-        roomData.addLog("test");
-        send({ type: "log", payload: { log: "test" } });
-    }
 
     // <script>
     //     const chat = document.getElementById('chat');
@@ -40,11 +36,10 @@ const Content = () => {
                     {/* <canvas id="main"></canvas> */}
                 </div>
                 <div className="col s12 border1 p0" style={{marginTop: "10px"}}>
-                    {roomData.logs.map((v) => 
-                    <div className="col s12 border1">{v}</div>
-                    )}
+                    <ul id="log" className="collection m0" style={{height: "180px", overflowY: "scroll", fontSize: "10px", lineHeight: 1.5}}>
+                        {roomData.logs.slice().reverse().map((v) => <li className="collection-item" style={{padding: "0 5px", lineHeight: 1.6}}>{v}</li>)}
+                    </ul>
                 </div>
-                <button className="btn" onClick={sendLog}>ログを追加</button>
             </div>
             {/* Player Board */}
             <div className="col s7">
@@ -93,10 +88,13 @@ const Content = () => {
                     {/* Player Info */}
                     <div className="row s3 light-blue lighten-5">
                         <ul className="collection" style={{marginBottom: 0}}>
-                            <li className="collection-item">PlayerA Info</li>
-                            <li className="collection-item">PlayerB Info</li>
-                            <li className="collection-item">PlayerC Info</li>
-                            <li className="collection-item">PlayerD Info</li>
+                            {Object.entries(roomData.playerInfo).map(([playerId, info], index) => 
+                                <li className="collection-item">player{index+1}: {info.userName}</li>
+                            )}
+                            {roomData.playerLength < 1 && <li className="collection-item">player1:</li>}
+                            {roomData.playerLength < 2 && <li className="collection-item">player2:</li>}
+                            {roomData.playerLength < 3 && <li className="collection-item">player3:</li>}
+                            {roomData.playerLength < 4 && <li className="collection-item">player4:</li>}
                         </ul>
                     </div>
                     {/* Chat */}

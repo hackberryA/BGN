@@ -1,4 +1,4 @@
-import { createStore } from "zustand/vanilla";
+import { create } from "zustand";
 
 type UserInfo = { userName: string };
 type UserInfoMap = {[userId: string]: UserInfo};
@@ -42,7 +42,7 @@ type PlayerInfoMap = {[playerId: string]: PlayerInfo}
  * @param phase        フェーズ： "waiting" | "setup" | "quarry" | "preview" | "decorate";
  * @param round        ラウンド数
  */
-type RoomData = { 
+export type BabylonRoomData = { 
   logs         : string[];
   userLength   : number;
   userInfo     : UserInfoMap;
@@ -52,30 +52,28 @@ type RoomData = {
   phase        : Phase;
   round        : number;
 };
-const defaultRoomData: RoomData = {
+const defaultRoomData: BabylonRoomData = {
   userLength: 0, userInfo: {}, playerLength: 0, playerInfo: {},
   logs: [], status: "waiting", phase: "waiting", round: 0,
 }
-type RoomDataMap = {[roomId: string]: RoomData}
+type BabylonRoomDataMap = {[roomId: string]: BabylonRoomData}
 /** ルームデータストア */
-type RoomDataStore = {
-  data: RoomDataMap;
+type BabylonRoomDataStore = {
+  data: BabylonRoomDataMap;
   // 部屋の取得・追加・削除
-  get: (roomId: string) => RoomData | undefined;
-  add: (roomId: string) => void;
+  has: (roomId: string) => boolean;
+  new: (roomId: string) => void;
+  get: (roomId: string | undefined) => BabylonRoomData | undefined;
   remove: (roomId: string) => void;
-  // 部屋データ更新
-  update: (roomId: string, partial: Partial<RoomData>) => void;
+  // 単位部屋データ更新
+  update: (roomId: string, partial: Partial<BabylonRoomData>) => void;
 }
 
-export const roomData = createStore<RoomDataStore>((set, get) => ({
+export const useBabylonRoomData = create<BabylonRoomDataStore>((set, get) => ({
   data: {},
-  get: (roomId) => get().data[roomId],
-  add: (roomId) =>
-    set((state) => {
-      if (state.data[roomId]) return {};
-      return { data: {...state.data, [roomId]: {...defaultRoomData}}};
-    }),
+  has: (roomId) => !!get().data[roomId],
+  new: (roomId) => set((state) => ({data: {...state.data, [roomId]: {...defaultRoomData}}})),
+  get: (roomId) => roomId ? get().data[roomId] : undefined,
   remove: (roomId) =>
     set((state) => {
       if (!state.data[roomId]) return {};

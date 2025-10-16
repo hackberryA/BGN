@@ -6,7 +6,7 @@ import { DoublePillar } from "./meshes/DoublePillar";
 import PlayerBoard from "./meshes/PlayerBoard";
 import { SinglePillar } from "./meshes/SinglePillar";
 import { Stairway } from "./meshes/Stairway";
-import { useRoomData } from "./hooks/useRoomData";
+import { useBabylonRoomData } from "../hooks/useBabylonRoomData";
 
 const width = 20;
 const height = 16;
@@ -14,8 +14,8 @@ const data = new Map()
 
 type PlayerInfo = {playerId: string}
 const Components = ({playerId}: PlayerInfo) => {
-  const roomData = useRoomData();
-  const playerData = roomData.getPlayerInfo(playerId)
+  const roomData = useBabylonRoomData();
+  // const playerData = roomData.getPlayerInfo(playerId)
 
   for (var x=0; x<8; x++) {
     for (var z=0; z<8; z++) {

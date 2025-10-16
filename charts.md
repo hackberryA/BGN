@@ -36,3 +36,11 @@
 | decorate    | [{x,y,z,type}] | [{x,y,z,type}]    | [{x,y,z,type}]                      | 装飾確定                           |
 | ----------- | -------------- | ----------------- | ----------------------------------- | --------------------------------- |
 | round token |                |                   | roundToken: 効果設定                 | ラウンドトークン                   |
+
+
+
+| state | userIds     | playerIds  |
+| ----- | ----------- | ---------- |
+| init  | id          | (none)     | ----> reconnect ---> client: data
+|       |             |            |             [in playerId] ---> reconnect notification
+| enter | id          | id         | ----> enter ---> 
