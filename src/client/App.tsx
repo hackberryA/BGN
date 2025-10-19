@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Babylon from "./babylon/Babylon";
+import Babylon from "./components/babylon/Babylon";
 import Home from "./components/Home";
 
 const App = () => {

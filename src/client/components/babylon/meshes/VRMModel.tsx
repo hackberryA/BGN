@@ -73,7 +73,7 @@ export const VRMModelCanvas = () => {
   const [vrma, setVRMA] = useState<string>("テトリス");
   const containerRef = useRef(null)
   return (<>
-    <div style={{position: "relative"}}>
+    <div style={{position: "relative", width: "100%"}}>
       <div id="loading-vrm" className="center" style={{fontSize: "20px", width:"100%", top: "200px", position: "absolute"}}>
         <span>Now Loading...</span>
       </div>

@@ -1,19 +1,19 @@
 import { useState } from "react";
-import { generateUUID } from "three/src/math/MathUtils";
-import { USERID, USERNAME } from "../const/const";
+import { USERID_KEY, USERNAME_KEY } from "../const/const";
+import { generateUUID } from "../utils/StringUtils";
 
 export const useStorage = () => {
     const [userId] = useState<string>(() => {
-        const userId = localStorage.getItem(USERID);
+        const userId = localStorage.getItem(USERID_KEY);
         if (userId) return userId;
 
         const newId = generateUUID();
         localStorage.setItem("userid", newId);
         return newId;
     });
-    const userName = localStorage.getItem(USERNAME) || "";
+    const userName = localStorage.getItem(USERNAME_KEY) || "";
     const setUserName = (userName: string) => {
-        localStorage.setItem(USERNAME, userName);
+        localStorage.setItem(USERNAME_KEY, userName);
     }
 
     return {userId, userName, setUserName};

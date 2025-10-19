@@ -6,7 +6,6 @@ import { DoublePillar } from "./meshes/DoublePillar";
 import PlayerBoard from "./meshes/PlayerBoard";
 import { SinglePillar } from "./meshes/SinglePillar";
 import { Stairway } from "./meshes/Stairway";
-import { useBabylonRoomData } from "../hooks/useBabylonRoomData";
 
 const width = 20;
 const height = 16;
@@ -14,7 +13,6 @@ const data = new Map()
 
 type PlayerInfo = {playerId: string}
 const Components = ({playerId}: PlayerInfo) => {
-  const roomData = useBabylonRoomData();
   // const playerData = roomData.getPlayerInfo(playerId)
 
   for (var x=0; x<8; x++) {
@@ -23,14 +21,14 @@ const Components = ({playerId}: PlayerInfo) => {
     }
   }
   const list: JSX.Element[] = [];
-  data.forEach(({position, type, direction}, key) => {
+  data.forEach(({position, type, direction}, index) => {
         const x = width * (position.x - 3.5);
         const y = height * position.y + 1;
         const z = width * (position.z - 3.5);
         switch (type) {
-          case "single-pillar": list.push(<SinglePillar width={width} height={height} position={[x,y,z]}/>);break;
-          case "double-pillar": list.push(<DoublePillar width={width} height={height} position={[x,y,z]}/>);break;
-          case "stairway": list.push(<Stairway width={width} height={height} position={[x,y,z]} direction={direction}/>);break;
+          case "single-pillar": list.push(<SinglePillar width={width} height={height} position={[x,y,z]} key={index} />);break;
+          case "double-pillar": list.push(<DoublePillar width={width} height={height} position={[x,y,z]} key={index} />);break;
+          case "stairway": list.push(<Stairway width={width} height={height} position={[x,y,z]} direction={direction} key={index} />);break;
         }
   })
   return list

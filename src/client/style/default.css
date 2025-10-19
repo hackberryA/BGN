@@ -35,10 +35,10 @@ th { padding: 5px; white-space: nowrap; }
 td { padding: 5px; }
 /* スクロールバー */
 ::-webkit-scrollbar { width: 5px; height: 5px }
-::-webkit-scrollbar-track { background-color: rgb(225, 247, 255) }
-::-webkit-scrollbar-thumb { background-color: rgb(174, 218, 236); border-radius: 5px; }
+::-webkit-scrollbar-track { background-color: #e1f7ff }
+::-webkit-scrollbar-thumb { background-color: #aedaec; border-radius: 5px; }
 
-hr { margin: 30px -10px 10px -10px; border: 1px dashed skyblue; border-bottom: none; }
+hr.overview { margin: 30px -10px 10px -10px; border: 1px dashed skyblue; border-bottom: none; }
 .tab .en { font-size: 60%; font-weight: lighter; letter-spacing: .1rem; text-transform: initial;}
 .tab-content .en { font-size: 70%; color: #78bbf2; font-weight: lighter; }
 .remarks { border: 1px dotted skyblue; padding: 5px 20px; margin-left: 20px; }
@@ -46,3 +46,135 @@ hr { margin: 30px -10px 10px -10px; border: 1px dashed skyblue; border-bottom: n
 #tab1-2 .card-image {height: 140px; padding: 10px; border:1px skyblue dotted}
 #tab1-2 .card-content {padding-top: 10px; text-align: center;}
 #tab1-2 img { object-fit: contain; height: 100%;}
+
+/* チャット */
+.chat-box {height: 180px; overflow-y: scroll; font-size: 10px; line-height: 1.5; position: relative;}
+.chat-box .chat-name {color: grey}
+.chat-box .chat-time {color: skyblue; position: absolute; right:5px }
+.chat-box .chat-content {
+  background-color: #fff;
+  margin: 0 3px 4px 3px;
+  border-radius: 6px;
+  padding: 5px;
+  line-height: 13px;
+  position: relative;
+  color: black;
+}
+
+
+/* select */
+/* ドロップダウン全体の背景 */
+ul.dropdown-content.select-dropdown {
+  background-color: "white";
+  top: -24px;
+}
+
+/* 各選択肢の見た目 */
+ul.dropdown-content.select-dropdown li > span {
+  color: #000000;
+  /* font-size: 16px; */
+  /* min-height: 21px; */
+  /* height: 21px; */
+  /* line-height: 21px; */
+  /* padding: 0 16px; */
+}
+
+/* hover 時 */
+/* ul.dropdown-content.select-dropdown li:hover {
+  background-color: #cdeeff !important;
+} */
+
+/* 選択中の項目 */
+/* ul.dropdown-content.select-dropdown li.selected {
+  background-color: #b3e5fc !important;
+} */
+
+/* メインの select 表示部 */
+.select-wrapper input.select-dropdown {
+  background-color: #ffffff;
+  height: 21px;
+  line-height: 21px;
+  margin-top: 9px;
+}
+
+
+/*  */
+.player-name {
+  font-weight: bold;
+  color: red;
+}
+
+.user-icon {
+  border: 1px solid skyblue;
+  border-radius: 30px;
+  width: 30px;
+  height: 30px;
+  aspect-ratio: 1/1;
+  position: relative;
+  cursor: pointer;
+}
+.user-icon img {
+  max-width: 100%;
+  border-radius: 30px;
+}
+.user-info {
+  position: fixed;
+  right: 10px;
+  top: 50px;
+  width: 200px;
+  height: 200px;
+  background: #64B5F6;
+  /* border: 2px solid #87ceeb; */
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+  /* box-shadow: rgba(44, 117, 146, 0.4) 1px 5px 5px 1px; */
+  z-index: 1000;
+}
+.user-info .user-icon {
+  float: left;
+  margin-right: 10px;
+}
+.user-info .user-name {
+  height: 25px;
+  line-height: 13px;
+}
+.user-info .user-id {
+  color: #bbddf8;
+  font-size: 7px;
+}
+.user-info hr {
+  border: 1px dashed #bbddf8; border-bottom: none;
+  margin: 10px -7px;
+}
+.user-color {
+  line-height: 20px;
+  position: relative;
+}
+.color-box {
+  min-width: 40px;
+  min-height: 15px;
+  text-align: left;
+  display: inline-block;
+  border: 1px solid #bbddf8;
+  vertical-align: text-bottom;
+  cursor: pointer;
+}
+.color-info {
+  top: 25px;
+  position: absolute;
+  background-color: skyblue;
+  border-radius: 10px;
+  padding: 10px;
+}
+.online {
+  min-width: 10px;
+  min-height: 10px;
+  aspect-ratio: 1/1;
+  display: inline-block;
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 15px;
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+}

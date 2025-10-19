@@ -1,6 +1,9 @@
+import { getCuurrentTime } from "./StringUtils";
+
 export const logger = {
-  info: (...args: any[]) => console.log("ℹ️", ...args),
-  warn: (...args: any[]) => console.warn("⚠️", ...args),
-  error: (...args: any[]) => console.error("❌", ...args),
-  debug: (...args: any[]) => console.debug(...args)
+  log: (...args: any[]) => console.log(`[${getCuurrentTime()}]`, ...args),
+  info: (...args: any[]) => console.log(`[${getCuurrentTime()}]`, "ℹ️ ", ...args),
+  warn: (...args: any[]) => console.warn(`[${getCuurrentTime()}]`, "⚠️ ", ...args),
+  error: (...args: any[]) => console.error(`[${getCuurrentTime()}]`, "❌ ", ...args),
+  debug: (...args: any[]) => console.debug(`[${getCuurrentTime()}]`, ...args)
 };

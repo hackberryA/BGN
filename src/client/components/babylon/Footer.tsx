@@ -1,6 +1,5 @@
-import Tabs from "../../components/materialize/Tabs";
-import TabsTab from "../../components/materialize/Tabs";
-import { VRMModelCanvas } from "../meshes/VRMModel";
+import Tabs from "../materialize/Tabs";
+import { VRMModelCanvas } from "./meshes/VRMModel";
 // import rule from '../config/rule.yml';
 // console.log("rule", rule)
 const Footer = () => {
@@ -59,9 +58,8 @@ const BabylonOverview = () => <>
     <p>『バビロン』では、あなたは熟練した建築家としての役割を担います。</p>
     <p>採石場を掘り進め、最高の素材を見つけ出し、それらを巧みに使って自らの庭園を築き上げましょう。</p>
     <p>ゲームの終盤、王の前で最も見事な設計を披露した者こそが勝者とされ、「王国一の建築家」の称号を与えられるのです。</p>
-    <image  />
     <img src="/images/sample.png" width="400px" style={{marginLeft: "10px"}}/>
-    <hr/>
+    <hr className="overview"/>
     <span className="en">
         <p>In the 6th century BC, Nebuchadnezzar II, king of Babylon, wanted to honor his young wife, Amytis of Media, with magnificent gardens featuring countless beautifully scented flowers.</p>
         <p>So, he called on the most respected architects in his kingdom to test their ingenuity and fulfill his vision of creating one of the Seven Wonders of the Ancient World.</p>
@@ -74,26 +72,26 @@ const BabylonOverview = () => <>
 
 // コンポーネント
 const components = [
-    {col: 2, image: "playerBoard.png",   name: "プレイヤーボード", amount: "4枚", scale: "100%"},
-    {col: 2, image: "startingTiles.png", name: "開始テラスタイル", amount: "4枚", scale: "100%"},
-    {col: 2, image: "TerraceTiles.png",  name: "テラスタイル",     amount: "48枚", scale: "100%"},
-    {col: 2, image: "roundToken.png",    name: "ラウンドトークン", amount: "14枚", scale: "50%"},
-    {col: 2, image: "GameEndToken.png",  name: "終了トークン",     amount: "1枚", scale: "70%"},
-    {col: 2, image: "ScorePad.png",      name: "スコアパッド",     amount: "1枚", scale: "100%"},
-    {col: 3, image: "quarry.png",        name: "採掘場",          amount: "1個", scale: "100%"},
-    {col: 3, image: "singlePillar.png",  name: "シングル柱",      amount: "148個", scale: "70%"},
-    {col: 3, image: "doublePillar.png",  name: "ダブル柱",        amount: "60個", scale: "70%"},
-    {col: 3, image: "belvederes.png",    name: "展望台",          amount: "38個", scale: "70%"},
-    {col: 3, image: "stairway.png",      name: "階段",            amount: "38個", scale: "70%"},
-    {col: 3, image: "fountain.png",      name: "噴水",            amount: "15個", scale: "70%"},
-    {col: 3, image: "statue.png",        name: "彫像",            amount: "38個", scale: "70%"},
-    {col: 3, image: "bridge.png",        name: "橋",              amount: "15個", scale: "70%"},
+    {col: 2, image: "/images/playerBoard.png",   name: "プレイヤーボード", amount: "4枚", scale: "100%"},
+    {col: 2, image: "/images/startingTiles.png", name: "開始テラスタイル", amount: "4枚", scale: "100%"},
+    {col: 2, image: "/images/TerraceTiles.png",  name: "テラスタイル",     amount: "48枚", scale: "100%"},
+    {col: 2, image: "/images/roundToken.png",    name: "ラウンドトークン", amount: "14枚", scale: "50%"},
+    {col: 2, image: "/images/GameEndToken.png",  name: "終了トークン",     amount: "1枚", scale: "70%"},
+    {col: 2, image: "/images/ScorePad.png",      name: "スコアパッド",     amount: "1枚", scale: "100%"},
+    {col: 3, image: "/images/quarry.png",        name: "採掘場",          amount: "1個", scale: "100%"},
+    {col: 3, image: "/images/singlePillar.png",  name: "シングル柱",      amount: "148個", scale: "70%"},
+    {col: 3, image: "/images/doublePillar.png",  name: "ダブル柱",        amount: "60個", scale: "70%"},
+    {col: 3, image: "/images/belvederes.png",    name: "展望台",          amount: "38個", scale: "70%"},
+    {col: 3, image: "/images/stairway.png",      name: "階段",            amount: "38個", scale: "70%"},
+    {col: 3, image: "/images/fountain.png",      name: "噴水",            amount: "15個", scale: "70%"},
+    {col: 3, image: "/images/statue.png",        name: "彫像",            amount: "38個", scale: "70%"},
+    {col: 3, image: "/images/bridge.png",        name: "橋",              amount: "15個", scale: "70%"},
 ]
 const ComponentsView = () => <>
     <div className="row m0">
         {components.map(({col, image, name, amount, scale}, index) => 
             <div className={`col s${col} card z-depth-0`} key={index}>
-                <div className="card-image"><img src={`images/${image}`} style={{scale: scale}}/></div>
+                <div className="card-image"><img src={image} style={{scale: scale}}/></div>
                 <div className="card-content" style={{whiteSpace: "nowrap"}}><p>{name}</p><p>{amount}</p></div>
             </div>
         )}
@@ -105,13 +103,13 @@ const TerraceTilesDescription = () => <>
     <p>テラスタイルには、<b>「建築シンボル」</b>と<b>（プレイヤー毎の）「花」</b>という、2種類の情報が描かれています。</p>
     <p>タイルの両面には、同じシンボルと同じ花が描かれています。</p>
     <p>なお、最初に配られる4枚のテラスタイルには「素材面」はなく、それぞれのプレイヤーの花の種類のみが描かれています。</p>
-    <img src="images/TerraceTileSide.png"/>
+    <img src="/images/TerraceTileSide.png"/>
     <p>素材面には、<b>「粘土」</b>、<b>「花崗岩」</b>、<b>「玄武岩」</b>の3種類があります。</p>
     <p>粘土タイルにはシンボルが2つ、花崗岩タイルには3つ、玄武岩タイルには4つ描かれています。</p>
-    <img src="images/TerraceTileTypes.png"/>
+    <img src="/images/TerraceTileTypes.png"/>
     <p>庭園面は4種類あり、それぞれが4人のプレイヤーボードに対応しています。</p>
-    <img src="images/TerraceTileGardenSide.png"/>
-    <hr/>
+    <img src="/images/TerraceTileGardenSide.png"/>
+    <hr className="overview"/>
     <span className="en">
         <p>Each Terrace tile has a Material side and a Garden side.</p>
         <p>Terrace tiles contain 2 pieces of information: building symbols and flowers that match the different player boards.</p>
@@ -130,8 +128,8 @@ const PlayerBoardsDescription = () => <>
     <p>プレイヤーボードは、次の2つのエリアに分かれています。</p>
     <p>・<b>建築エリア</b>：柱を安定して立てられるよう、8×8のくぼみがあります。ここに柱を立てて、自分の庭園を築いていきます。</p>
     <p>・<b>保管エリア</b>：柱を1本ずつ保管できるスペースが6つと、テラスタイルを1枚保管できるスロットがあります。</p>
-    <img src="images/playerBoards.png" style={{scale: "80%"}}/>
-    <hr/>
+    <img src="/images/playerBoards.png" style={{scale: "80%"}}/>
+    <hr className="overview"/>
     <span className="en">
         Player boards are divided into 2 areas:<br/>
         ‐ The building area has 64 notches in which to place pillars, so they remain stable and upright. This is where you build your garden.<br/>
@@ -144,7 +142,7 @@ const DesignersView = () => <>
     <p>サイト内のUI設計、3D設計等は「七花なのは」が行っていますが、本来の『バビロン』を参考にしています。</p>
     <br/>
     <p>本来の『バビロン』のゲームデザインに関わっている方々は以下です。</p>
-    <hr/>
+    <hr className="overview"/>
     <span className="en">
         <p>Designer: Olivier Grégoire</p>
         <p>Illustrator: The Creation Studio</p>
@@ -168,7 +166,7 @@ const GameProgress = () => <>
         B. <b>建設アクション</b>を任意で行うことができる。<br/>
         C. 未使用のアイテムを保管または破棄しなければならない。<br/>
     </div>
-    <hr/>
+    <hr className="overview"/>
     <span className="en">
         The game plays over a number of rounds depending on the number of players: <br/>
         15 rounds with 2 players, 13 rounds with 3 players, and 11 rounds with 4 players.<br/>

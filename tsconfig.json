@@ -12,7 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist"
   },
-  "include": ["src", "src/client/babylon/js"]
+  "include": ["src", "src/client/components/babylon/js"]
   
 }
 
