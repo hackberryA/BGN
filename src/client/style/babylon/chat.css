@@ -1,0 +1,14 @@
+
+/* チャット */
+.chat-box {height: 180px; overflow-y: scroll; font-size: 10px; line-height: 1.5; position: relative;}
+.chat-box .chat-name {color: grey}
+.chat-box .chat-time {color: skyblue; position: absolute; right:5px }
+.chat-box .chat-content {
+  background-color: #fff;
+  margin: 0 3px 4px 3px;
+  border-radius: 6px;
+  padding: 5px;
+  line-height: 13px;
+  position: relative;
+  color: black;
+}

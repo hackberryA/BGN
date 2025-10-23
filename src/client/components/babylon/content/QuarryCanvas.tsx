@@ -1,10 +1,11 @@
-import { USERID_KEY } from "../../../const/const";
 import { useBabylonWebSocket } from "../../../hooks/useBabylonWebSocket";
+import { useStorage } from "../../../hooks/useStorage";
 
 
 export const QuarryCanvas = () => {
     const {send, roomInfo, gameInfo, userInfoMap, playerInfoMap, userLength, playerLength} = useBabylonWebSocket();
-    const clientInfo = userInfoMap[localStorage.getItem(USERID_KEY)!]
+    const storage = useStorage()
+    const clientInfo = userInfoMap[storage.userId]
     return <>
             <div className="col s3">
             <div className="col s12 border2 valign-wrapper center"
@@ -12,6 +13,9 @@ export const QuarryCanvas = () => {
                 <span style={{position: "absolute", left:"3px", top:"0px"}}>Quarry</span>
                 ここに採掘場を描画
                 {/* <canvas id="main"></canvas> */}
+                <span>
+                    
+                </span>
             </div>
             <div className="col s12 border1 p0" style={{marginTop: "10px"}}>
                 <div id="room-log-title" className="m0" style={{fontSize: "10px", lineHeight: 1.5, paddingLeft: "5px", backgroundColor: "#aedaec"}}>全体ログ</div>

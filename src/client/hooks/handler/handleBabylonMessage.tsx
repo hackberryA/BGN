@@ -1,6 +1,6 @@
 import { NavigateFunction } from "react-router-dom";
 import { RoomInfo, GameInfo, UserInfoMap, PlayerInfoMap } from "../types/BabylonTypes";
-import { PREUSERNAME_KEY, USERNAME_KEY } from "../../const/const";
+import { StorageType } from "../useStorage";
 
 type Handlers = {
   navigate: NavigateFunction;
@@ -10,7 +10,7 @@ type Handlers = {
   setPlayerInfoMap: React.Dispatch<React.SetStateAction<PlayerInfoMap>>;
 };
 
-export function handleSocketMessage(message: string, handlers: Handlers) {
+export function handleSocketMessage(message: string, handlers: Handlers, storage: StorageType) {
     const { navigate, setRoomInfo, setGameInfo, setUserInfoMap, setPlayerInfoMap } = handlers;
     const { type, ...data } = JSON.parse(message);
 
@@ -22,7 +22,7 @@ export function handleSocketMessage(message: string, handlers: Handlers) {
 
         // F5等による再アクセス時、画面描画
         case "refresh":
-            localStorage.setItem(PREUSERNAME_KEY, localStorage.getItem(USERNAME_KEY) || "");
+            storage.setPreUserName(storage.userName);
             setRoomInfo(data.roomInfo);
             setGameInfo(data.gameInfo);
             setUserInfoMap(data.userInfoMap);

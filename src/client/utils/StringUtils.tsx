@@ -1,3 +1,5 @@
+import { NAME_COLOR_LIST } from "../const/const";
+
 export function generateUUID(): string {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
     const r = (Math.random() * 16) | 0;
@@ -24,4 +26,8 @@ export const getCuurrentTime = () => {
   const dd = String(d.getMinutes()).padStart(2, "0");
   const ss = String(d.getSeconds()).padStart(2, "0");
   return `${mm}:${dd}:${ss}`;
+}
+
+export const randomColor = () => {
+  return NAME_COLOR_LIST[Math.floor(Math.random() * (NAME_COLOR_LIST.length))]
 }

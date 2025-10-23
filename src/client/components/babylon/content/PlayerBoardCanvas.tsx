@@ -1,11 +1,12 @@
-import { USERID_KEY } from "../../../const/const";
 import { useBabylonWebSocket } from "../../../hooks/useBabylonWebSocket";
+import { useStorage } from "../../../hooks/useStorage";
 import { BabylonCanvas } from "../BabylonCanvas";
 
 
 export const PlayerBoardCanvas = () => {
     const {send, roomInfo, gameInfo, userInfoMap, playerInfoMap, userLength, playerLength} = useBabylonWebSocket();
-    const clientInfo = userInfoMap[localStorage.getItem(USERID_KEY)!]
+    const storage = useStorage()
+    const clientInfo = userInfoMap[storage.userId]
     return <>
         <div className="col s7">
             <div id="wrapper-canvas" className="col s9 border3 valign-wrapper center p0" style={{aspectRatio: "1/1", position: "relative"}}>

@@ -1,26 +1,20 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { generateUUID, randomRoomId } from "../utils/StringUtils";
-import { VRMModelCanvas } from "./babylon/meshes/VRMModel";
-import { AUTH_KEY, PREUSERNAME_KEY, USERID_KEY, USERNAME_KEY } from "../const/const";
+import { useStorage } from "../hooks/useStorage";
+import { randomRoomId } from "../utils/StringUtils";
 
 export default function Home() {
   const [roomId, setRoomId] = useState<string>("");
   const [gameId, setGameId] = useState<string>("babylon");
   const [password, setPassword] = useState<string>("");
-  const [inputUserName, setInputUserName] = useState<string>(localStorage.getItem(USERNAME_KEY) || "");
   const [error, setError] = useState("");
+  const storage = useStorage()
+  const [inputUserName, setInputUserName] = useState<string>(storage.userName);
   const navigate = useNavigate();
-  const handleChangeUserName = (e: any) => {
-    const value = e.currentTarget.value.trim();
-    setInputUserName(value);
-  }
-  
-  useEffect(() => {
-      const elm = document.querySelectorAll('select')
-      M.FormSelect.init(elm , {}); // Materialize 初期化
-  }, []); //初回レンダリング
+  const handleChangeUserName = (e: any) => setInputUserName(e.currentTarget.value.trim());
 
+  // Materialize 初期化
+  useEffect(() => { M.FormSelect.init(document.querySelectorAll('select') , {}); }, []);
   
   /** 部屋参加 */
   const enterRoom = () => {
@@ -36,12 +30,9 @@ export default function Home() {
       setError("部屋IDを入力してください")
       return;
     }
-    if (!localStorage.getItem(USERID_KEY)) {
-      localStorage.setItem(USERID_KEY, generateUUID())
-    }
-    localStorage.setItem(PREUSERNAME_KEY, localStorage.getItem(USERNAME_KEY) || "")
-    localStorage.setItem(USERNAME_KEY, inputUserName)
-    localStorage.setItem(AUTH_KEY, "false")
+    storage.setPreUserName(storage.userName);
+    storage.setUserName(inputUserName);
+    storage.setAuth("false");
     navigate(`/${gameId}/${roomId}`);
   }
 
@@ -52,10 +43,12 @@ export default function Home() {
     //   setError("You!")
     //   return;
     // }
+    
     // ユーザ情報設定
-    localStorage.setItem(USERID_KEY, generateUUID())
-    localStorage.setItem(USERNAME_KEY, "なのは")
-    localStorage.setItem(AUTH_KEY, "true")
+    storage.setPreUserName(storage.userName);
+    storage.setUserName("なのは");
+    storage.setAuth("true");
+
     // 部屋ID作成
     const newRoomId = randomRoomId()
     navigate(`/${gameId}/${newRoomId}`);

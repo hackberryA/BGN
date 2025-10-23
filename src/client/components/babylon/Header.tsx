@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import { NAME_COLOR_LIST } from "../../const/const";
 import { useBabylonWebSocket } from "../../hooks/useBabylonWebSocket";
 import { useStorage } from "../../hooks/useStorage";
-import { NAME_COLOR_LIST, USERCOLOR_KEY } from "../../const/const";
 
 const Header = () => {
     const {send, roomInfo, userInfoMap, playerInfoMap} = useBabylonWebSocket();
-    const {userId, userName} = useStorage()
+    const storage = useStorage()
     const [openUserInfo, setOpenUserInfo] = useState<boolean>(false)
     const [openColorPicker, setOpenColorPicker] = useState<boolean>(false)
     const userInfoRef = useRef<HTMLDivElement>(null);
@@ -13,7 +13,7 @@ const Header = () => {
     const selectColorHandler = (color: string) => {
         send("selectUserColor", {color})
         setOpenColorPicker(false)
-        localStorage.setItem(USERCOLOR_KEY, color)
+        storage.setUserColor(color)
     }
             
     useEffect(() => {
@@ -47,7 +47,7 @@ const Header = () => {
         <div className="col s12">
             <div className="right valign-wrapper">
                 <div className="p0">
-                    <span style={{marginRight: "10px"}}>{userName}{userInfoMap[userId] && userInfoMap[userId].auth ? " (Auth)" : ""}</span>
+                    <span style={{marginRight: "10px"}}>{storage.userName}{userInfoMap[storage.userId] && userInfoMap[storage.userId].auth ? " (Auth)" : ""}</span>
                     {/* <button id="joinRoom" className="btn waves-effect waves-light z-depth-0 blue darken-1"
                         style={{ margin: "3px 10px", padding: "0px 5px", width: "50px", height: "20px", lineHeight: "20px", fontSize: "50%" }}
                         onClick={exit}>
@@ -60,10 +60,10 @@ const Header = () => {
                     </div>
                     {openUserInfo &&<div className="user-info" >
                         <div className="user-icon"><img src="/images/icons/nanoha.png"/></div>
-                        <div className="user-name">{userName}<br/><span className="user-id">{userId}</span></div>
+                        <div className="user-name">{storage.userName}<br/><span className="user-id">{storage.userId}</span></div>
                         <hr/>
                         <div className="user-color">
-                            色選択：<span className="color-box" style={{backgroundColor: userInfoMap[userId].color}} onClick={(e)=>{
+                            色選択：<span className="color-box" style={{backgroundColor: userInfoMap[storage.userId].color}} onClick={(e)=>{
                                 
   e.stopPropagation();
                                 setOpenColorPicker(true)}}/>

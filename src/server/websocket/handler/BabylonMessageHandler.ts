@@ -1,4 +1,4 @@
-import { BabylonDataType, UserInfo } from "../../types/BabylonTypes";
+import { BabylonDataType } from "../../types/BabylonTypes";
 import { getCuurrentTime } from "../../utils/StringUtils";
 import { logger } from "../../utils/logger";
 import { SocketManager } from "../SocketManager"; // 逆参照
@@ -77,7 +77,7 @@ export function handleBabylonMessage(socketManager: SocketManager, msg: BabylonM
         gameData.userInfoMap[userId].online = true;
       } else {
         // 新規
-        const userInfo: UserInfo = {
+        const userInfo = {
           userName,
           color: data.color || "blue",
           logs: [{ time: now, content: clientLog }],

@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
-import { AUTH_KEY, NAME_COLOR_LIST, PREUSERNAME_KEY, USERCOLOR_KEY, USERID_KEY, USERNAME_KEY } from "../const/const";
-import { GameInfo, PlayerInfoMap, RoomInfo, ScoketContextType, UserInfoMap } from "./types/BabylonTypes";
 import { useNavigate } from "react-router-dom";
 import { handleSocketMessage } from "./handler/handleBabylonMessage";
+import { GameInfo, PlayerInfoMap, RoomInfo, ScoketContextType, UserInfoMap } from "./types/BabylonTypes";
+import { useStorage } from "./useStorage";
 
 /** ルーム情報 - デフォルト値 */
 const defaultRoomInfo: RoomInfo = {roomId: "", status: "waiting", logs: [], chat: []};
@@ -19,16 +19,13 @@ export const useBabylonWebSocket = () => useContext(ScoketContext);
 
 type Props = { roomId: string; children: React.ReactNode };
 export const SocketProvider: React.FC<Props> = ({ roomId, children}) => {
+  const storage = useStorage()
   const [socket, setSocket] = useState<WebSocket|null>(null);
   const socketRef = useRef<WebSocket|null>(null);
   const [roomInfo, setRoomInfo] = useState<RoomInfo>(defaultRoomInfo);
   const [userInfoMap, setUserInfoMap] = useState<UserInfoMap>({})
   const [gameInfo, setGameInfo] = useState<GameInfo>(defaultGameInfo)
   const [playerInfoMap, setPlayerInfoMap] = useState<PlayerInfoMap>({})
-  const localUserId = localStorage.getItem(USERID_KEY) || "";
-  const localUserName = localStorage.getItem(USERNAME_KEY) || "";
-  const localPreUserName = localStorage.getItem(PREUSERNAME_KEY) || "";
-  const localAuth = localStorage.getItem(AUTH_KEY) || "false";
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,17 +35,19 @@ export const SocketProvider: React.FC<Props> = ({ roomId, children}) => {
     //////////////////////////////////////////////////
     // 接続時
     ws.onopen = () => {
-      const color = localStorage.getItem(USERCOLOR_KEY) || NAME_COLOR_LIST[Math.floor(Math.random() * (NAME_COLOR_LIST.length))]
-      localStorage.setItem(USERCOLOR_KEY, color)
-      if (localUserName) {
+      if (storage.userName) {
         // クライアント情報を設定
         ws.send(JSON.stringify({
           gameId: "babylon",
           roomId,
           messageType: "connect",
-          userId: localUserId,
-          userName: localUserName,
-          data: {color: color, preUserName: localPreUserName, auth: localAuth === "true"},
+          userId: storage.userId,
+          userName: storage.userName,
+          data: {
+            color: storage.userColor,
+            preUserName: storage.preUserName,
+            auth: storage.auth === "true",
+          },
         }));
       } else {
         navigate("/")
@@ -56,7 +55,7 @@ export const SocketProvider: React.FC<Props> = ({ roomId, children}) => {
     };
     //////////////////////////////////////////////////
     // 受信設定
-    ws.onmessage = (e) => handleSocketMessage(e.data, { navigate, setRoomInfo, setGameInfo, setUserInfoMap, setPlayerInfoMap });
+    ws.onmessage = (e) => handleSocketMessage(e.data, { navigate, setRoomInfo, setGameInfo, setUserInfoMap, setPlayerInfoMap }, storage);
 
     //////////////////////////////////////////////////
     ws.onclose = () => { };
@@ -77,8 +76,8 @@ export const SocketProvider: React.FC<Props> = ({ roomId, children}) => {
       gameId: "babylon",
       roomId: roomId,
       messageType: messageType,
-      userId: localStorage.getItem(USERID_KEY),
-      userName: localStorage.getItem(USERNAME_KEY),
+      userId: storage.userId,
+      userName: storage.userName,
       data: data,
     }));
   };

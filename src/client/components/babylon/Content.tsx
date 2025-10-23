@@ -1,5 +1,5 @@
 import { useBabylonWebSocket } from "../../hooks/useBabylonWebSocket";
-import { ChatView } from "./content/ChatView";
+import { ChatComponent } from "./content/ChatView";
 import { GameInfoView } from "./content/GameInfoView";
 import { PlayerBoardCanvas } from "./content/PlayerBoardCanvas";
 import { QuarryCanvas } from "./content/QuarryCanvas";
@@ -15,7 +15,7 @@ const Content = () => {
                 <div className="row">
                     <GameInfoView />
                     {/* Chat */}
-                    <ChatView />
+                    <ChatComponent />
                 </div>
             </div>
         </div>

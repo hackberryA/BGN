@@ -76,7 +76,9 @@ export class SocketManager {
           logger.error(`[${clientInfo.roomId}] Delete room.`, this.clients[clientInfo.roomId]);
         } else {
           logger.warn(`[${clientInfo.roomId}] Not delete room playing`);
-          this.gamedata[clientInfo.roomId].userInfoMap[clientInfo.userId].online = false
+          if (this.gamedata[clientInfo.roomId]) {
+            this.gamedata[clientInfo.roomId].userInfoMap[clientInfo.userId].online = false
+          }
         }
       } else {
         // ログ
