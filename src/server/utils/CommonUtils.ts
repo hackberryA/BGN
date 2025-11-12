@@ -24,6 +24,9 @@ const words: Record<string, string> = {
   "z": "zephyr", "-": "hyphen",
 };
 
+export const randInt = (max: number) => {
+  return Math.floor(Math.random() * (max))
+}
 /**
  * @returns ルームIDランダム生成
  */
