@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { generateUUID, randomColor } from "../utils/StringUtils";
+import { generateUUID, randomColor } from "../utils/CommonUtils";
 
 // 定数
 const COMMONKEY = "7na7no8ha7-"
@@ -8,6 +8,7 @@ const USERID_KEY = `${COMMONKEY}userId`
 const USERNAME_KEY = `${COMMONKEY}userName`;
 const PREUSERNAME_KEY = `${COMMONKEY}preuserName`;
 const USERCOLOR_KEY = `${COMMONKEY}userColor`;
+const USERICON_KEY = `${COMMONKEY}userIcon`;
 
 export type StorageType =  {
     userId: string;
@@ -20,6 +21,10 @@ export type StorageType =  {
     setAuth: (value: string) => void;
     userColor: string;
     setUserColor: (value: string) => void;
+    userIcon: string;
+    setUserIcon: (value: string) => void;
+    // クリア
+    clear: () => void;
 }
 
 export const useStorage = () => {
@@ -33,6 +38,22 @@ export const useStorage = () => {
     const [preUserName, setPreUserName] = useState(localStorage.getItem(PREUSERNAME_KEY) || "");
     /** ユーザカラー */
     const [userColor, setUserColor] = useState(localStorage.getItem(USERCOLOR_KEY) || randomColor());
+    /** ユーザアイコン */
+    const [userIcon, setUserIcon] = useState(initUserIcon);
+    const clear = () => {
+        setAuth("false")
+        setUserId("")
+        setUserName("")
+        setPreUserName("")
+        setUserColor("blue")
+        setUserIcon("default")
+        localStorage.setItem(AUTH_KEY, "false")
+        localStorage.setItem(USERID_KEY, "")
+        localStorage.setItem(USERNAME_KEY, "")
+        localStorage.setItem(PREUSERNAME_KEY, "")
+        localStorage.setItem(USERCOLOR_KEY, "blue")
+        localStorage.setItem(USERICON_KEY, "default")
+    }
 
     return {
         userId,      setUserId:      setStateHandler(setUserId,      USERID_KEY),
@@ -40,6 +61,8 @@ export const useStorage = () => {
         preUserName, setPreUserName: setStateHandler(setPreUserName, PREUSERNAME_KEY),
         auth,        setAuth:        setStateHandler(setAuth,        AUTH_KEY),
         userColor,   setUserColor:   setStateHandler(setUserColor,   USERCOLOR_KEY),
+        userIcon,    setUserIcon:    setStateHandler(setUserIcon,    USERICON_KEY),
+        clear: clear
     } as StorageType;
 }
 const setStateHandler = (setState: Dispatch<SetStateAction<string>>, key: string) => (value: string) => {
@@ -54,6 +77,14 @@ const initUserId = () => {
     if (userId) return userId;
 
     const newId = generateUUID();
-    localStorage.setItem("userid", newId);
+    localStorage.setItem(USERID_KEY, newId);
     return newId;
+}
+/** UserIcon初期化 */
+const initUserIcon = () => {
+    const userIcon = localStorage.getItem(USERICON_KEY);
+    if (userIcon) return userIcon;
+
+    localStorage.setItem(USERID_KEY, "default");
+    return "default";
 }

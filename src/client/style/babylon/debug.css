@@ -1,0 +1,103 @@
+
+.debug-info-wrapper {
+    padding: 0px 20px;
+    position: relative;
+}
+.debug-info-button {
+    cursor:pointer;
+    color: skyblue;
+    position: absolute;
+    right: 24px;
+    top: -24px;
+}
+.debug-info {
+    border: rgb(188, 224, 238) 5px ridge;
+    color: rgb(64, 168, 209);
+    background-color: rgb(245, 251, 253);
+    padding-top: 10px
+}
+
+.debug-info table {
+    border: 1px solid skyblue;
+    margin: 3px;
+    background-color: white;
+}
+.debug-info table th {
+    background-color: rgb(215, 236, 245);
+}
+
+.debug-info .user-icon {
+    cursor: pointer;
+    left: 5px;
+    top: 4px;
+    float: left;
+    margin: 2px;
+    opacity: .5;
+    border: 1px dashed #0000ff;
+}
+.debug-info .user-icon:hover {
+    opacity: .8;
+    &&::before {
+        content:"";
+        background: yellow;
+        position:absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        opacity: .2;
+        z-index: 100;
+    }
+}
+.debug-info .user-icon.selected {
+    border: 1px solid #0000ff77;
+    opacity: 1;
+}
+
+.control-hint {
+    border: #bce0ee 1px solid;
+    color: #40a8d1;
+    background-color: #f5fbfd;
+    padding: 5px 10px 10px 10px;
+    width: 600px;
+}
+.control-hint-title {
+    font-weight: bold;
+    line-height: 30px;
+    margin-left: -10px;
+}
+
+
+table.score-canvas {
+    width: 100px;
+}
+table.score-canvas tr {
+    height: 30px;
+}
+table.score-canvas td {
+    position: relative;
+    min-width: 30px;
+    border: 1px solid skyblue;
+    padding:0;
+    text-align: center;
+}
+table.score-canvas td div {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.5;
+}
+table.score-canvas td span {
+    color: black;
+    font-size: 20px;
+    /* text-shadow: 
+        1px 1px white,
+        -1px 1px white,
+        1px -1px white,
+        -1px -1px white ; */
+}

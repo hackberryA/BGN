@@ -1,7 +1,8 @@
-export type componentType = {
-    width: number,
-    height: number,
-    position: [x: number, y: number, z: number],
+export type ComponentType = {
+    // width: number,
+    // height: number,
+    position: string,
     direction?: number
+    status?: string
 };
 

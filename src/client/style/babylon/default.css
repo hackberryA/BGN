@@ -9,9 +9,6 @@ html { font-size: 80%; }
 .border1 { border: 1px skyblue solid; }
 .border2 { border: 2px skyblue solid; }
 .border3 { border: 3px skyblue solid; }
-/* ストックタイル画像 */
-.stock-tile-main { position: absolute; right: 2px; top: 20px; height: 40px; width: 40px; }
-.stock-tile-sub { position: absolute; right: 3px; top: 20px; height: 20px; width: 20px; }
 /* テーブル */
 th { padding: 5px; white-space: nowrap; }
 td { padding: 5px; }
@@ -61,84 +58,33 @@ ul.dropdown-content.select-dropdown li > span {
   margin-top: 9px;
 }
 
-
-/*  */
-.player-name {
-  font-weight: bold;
-  color: red;
-}
-
-.user-icon {
-  border: 1px solid skyblue;
-  border-radius: 30px;
-  width: 30px;
-  height: 30px;
-  aspect-ratio: 1/1;
-  position: relative;
-  cursor: pointer;
-}
-.user-icon img {
-  max-width: 100%;
-  border-radius: 30px;
-}
-.user-info {
-  position: fixed;
-  right: 10px;
-  top: 50px;
-  width: 200px;
-  height: 200px;
-  background: #64B5F6;
-  /* border: 2px solid #87ceeb; */
-  border-radius: 10px;
+.remarks-score-row {
   padding: 10px;
-  color: white;
-  /* box-shadow: rgba(44, 117, 146, 0.4) 1px 5px 5px 1px; */
-  z-index: 1000;
 }
-.user-info .user-icon {
+img.remarks-score {
+  width: 54px;
   float: left;
   margin-right: 10px;
+  border: 1px solid #48a7ccff ;
 }
-.user-info .user-name {
-  height: 25px;
-  line-height: 13px;
+
+
+.switch label input[type=checkbox]:checked+.lever {
+    background-color: #a6dcec;
 }
-.user-info .user-id {
-  color: #bbddf8;
-  font-size: 7px;
+.switch label input[type=checkbox]:checked+.lever:after {
+    background-color: #48a7ccff;
 }
-.user-info hr {
-  border: 1px dashed #bbddf8; border-bottom: none;
-  margin: 10px -7px;
+.switch label .lever {
+  margin: 0;
+  margin-right: 10px;
 }
-.user-color {
-  line-height: 20px;
-  position: relative;
+.switch label .lever {
+    background-color: #cae2e9;
 }
-.color-box {
-  min-width: 40px;
-  min-height: 15px;
-  text-align: left;
-  display: inline-block;
-  border: 1px solid #bbddf8;
+.switch label {
   vertical-align: text-bottom;
-  cursor: pointer;
 }
-.color-info {
-  top: 25px;
-  position: absolute;
-  background-color: skyblue;
-  border-radius: 10px;
-  padding: 10px;
-}
-.online {
-  min-width: 10px;
-  min-height: 10px;
-  aspect-ratio: 1/1;
-  display: inline-block;
-  border: 1px solid rgb(204, 204, 204);
-  border-radius: 15px;
-  position: absolute;
-  right: 6px;
-  bottom: 6px;
-}
+/* .switch label .lever:before, .switch label .lever:after {
+  top:0
+} */

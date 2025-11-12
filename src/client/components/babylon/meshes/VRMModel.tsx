@@ -5,13 +5,13 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import PlayerBoard from "./PlayerBoard";
+import PlayerBoardMesh from "./PlayerBoardMesh";
 
 
 const width = 20;
 const height = 16;
 
-const Scene = ({vrma, setVRMA}: {vrma: string, setVRMA: any}) => {
+const VRMModelScene = ({vrma, setVRMA}: {vrma: string, setVRMA: any}) => {
   const { gl, camera, size } = useThree();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -47,7 +47,7 @@ const Scene = ({vrma, setVRMA}: {vrma: string, setVRMA: any}) => {
   return (
       <mesh>
         {/* ボード */}
-        <PlayerBoard width={width} />
+        <PlayerBoardMesh />
         {/* コンポーネント */}
         <VRMModel height={height * 3} vrma={vrma} setVRMA={setVRMA}/>
       </mesh>
@@ -102,31 +102,27 @@ export const VRMModelCanvas = () => {
             ) }
             {vrma && <span>Now Playing "{vrma}"</span>}
           </div>
-          <div className="row">
-            <div className="col s2">
-              [ambientLight] {ambientLightIntensity}, {ambientLightColor}
-              <p className="range-field m0">
-                <input type="range" id="ambientLightIntensity" min="0" max="100" 
-                  onChange={(e)=>{setAmbientLightIntensity(Number(e.target.value) / 10)}} />
-              </p>
-            </div>
-            <div className="col s1" style={{padding:"12px"}}>
-              <input id="ambientLightColor" type="color"value={ambientLightColor}
-                  onChange={(e)=>{setAmbientLightColor(e.target.value)}} />
-            </div>
+          <div className="col s2">
+            <p className="range-field m0">
+              <input type="range" id="ambientLightIntensity" min="0" max="100" 
+                onChange={(e)=>{setAmbientLightIntensity(Number(e.target.value) / 10)}} />
+            </p>
+            [ambientLight] {ambientLightIntensity}, {ambientLightColor}
           </div>
-          <div className="row">
-            <div className="col s2">
-              [directionalLight] {directionalLightIntensity}, {directionalLightColor}
-              <p className="range-field m0">
-                <input type="range" id="directionalLightIntensity" min="0" max="100" 
-                  onChange={(e)=>{setDirectionalLightIntensity(Number(e.target.value) / 10)}} />
-              </p>
-            </div>
-            <div className="col s1" style={{padding:"12px"}}>
-              <input id="directionalLightColor" type="color" value={directionalLightColor}
-                onChange={(e)=>{setDirectionalLightColor(e.target.value)}} />
-            </div>
+          <div className="col s1" style={{padding:"12px"}}>
+            <input id="ambientLightColor" type="color"value={ambientLightColor}
+                onChange={(e)=>{setAmbientLightColor(e.target.value)}} />
+          </div>
+          <div className="col s2">
+            <p className="range-field m0">
+              <input type="range" id="directionalLightIntensity" min="0" max="100" 
+                onChange={(e)=>{setDirectionalLightIntensity(Number(e.target.value) / 10)}} />
+            </p>
+            [directionalLight] {directionalLightIntensity}, {directionalLightColor}
+          </div>
+          <div className="col s1" style={{padding:"12px"}}>
+            <input id="directionalLightColor" type="color" value={directionalLightColor}
+              onChange={(e)=>{setDirectionalLightColor(e.target.value)}} />
           </div>
         </div>
         <Canvas
@@ -138,13 +134,13 @@ export const VRMModelCanvas = () => {
             <ambientLight intensity={ambientLightIntensity} color={ambientLightColor} />
             <directionalLight position={[100, 200, 100]} color={directionalLightColor} intensity={directionalLightIntensity}  />
             <directionalLight position={[-100, 200, -100]} color={directionalLightColor} intensity={directionalLightIntensity}  />
-            <Scene vrma={vrma} setVRMA={setVRMA}/>
+            <VRMModelScene vrma={vrma} setVRMA={setVRMA}/>
           </group>
           <OrbitControls
             enablePan
             enableRotate
             enableZoom
-            target={[0,70,0]}
+            target={[0,60,0]}
             mouseButtons={{ LEFT: undefined, MIDDLE: THREE.MOUSE.PAN, RIGHT: THREE.MOUSE.ROTATE }}
           />
         </Canvas>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStorage } from "../hooks/useStorage";
-import { randomRoomId } from "../utils/StringUtils";
+import { randomRoomId } from "../utils/CommonUtils";
 
 export default function Home() {
   const [roomId, setRoomId] = useState<string>("");
@@ -130,6 +130,11 @@ export default function Home() {
           </div>
         </div>
       </div>
+        <button className="btn waves-effect waves-light z-depth-0 blue darken-1"
+          style={{ marginRight: "10px", marginBottom: "1px", padding: "0px 5px", height: "21px", lineHeight: "21px", fontSize: "50%" }}
+          onClick={() => storage.clear()}>
+          ローカルストレージを削除
+        </button>
     </footer>
   </>;
 }

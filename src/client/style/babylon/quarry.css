@@ -1,0 +1,134 @@
+
+
+.quarry {
+    display: inline-block;
+    background-color: #000;
+}
+.quarry .quarry-tile {
+    border: 1px solid #000;
+    border-radius: 5px;
+    width: 23%;
+    aspect-ratio: 1/1;
+    margin: 1%;
+    margin-top: 2%;
+    float: left;
+    cursor: pointer;
+    position:relative;
+    overflow: hidden;
+}
+.quarry .quarry-tile:hover {
+    &&::before {
+        content:"";
+        background: yellow;
+        position:absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        opacity: .3;
+        z-index: 100;
+    }
+}
+.quarry .quarry-tile.selected {
+    border: 1px solid red;
+
+    &&::before {
+        content:"";
+        background: yellow;
+        position:absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        opacity: .2;
+        z-index: 100;
+    }
+}
+.quarry .quarry-tile .edge-top {
+  content:"";
+  width:160%;
+  height:160%;
+  top: -155%;
+  left: -30%;
+  border-radius: 50%;/*角丸*/
+  position:absolute;
+  background: #000;
+}
+.quarry .quarry-tile .edge-bottom {
+  content:"";
+  width:160%;
+  height:160%;
+  top: 95%;
+  left: -30%;
+  border-radius: 50%;/*角丸*/
+  position:absolute;
+  background: #000;
+}
+.quarry .quarry-tile .edge-left {
+  content:"";
+  width:160%;
+  height:160%;
+  top: -30%;
+  left: -155%;
+  border-radius: 50%;/*角丸*/
+  position:absolute;
+  background: #000;
+}
+.quarry .quarry-tile .edge-right {
+  content:"";
+  width:160%;
+  height:160%;
+  top: -30%;
+  left: 95%;
+  border-radius: 50%;/*角丸*/
+  position:absolute;
+  background: #000;
+}
+.quarry .quarry-tile .flower {
+  vertical-align: middle;
+  width:22%;
+  height:22%;
+  position: absolute;
+  top: 36%;
+  left: 36%;
+}
+.quarry .quarry-tile .symbol {
+    width:20%;
+    height:20%;
+    position: absolute;
+    filter: brightness(5)
+}
+.quarry .quarry-tile .symbol-1 { top: 15%; left: 15%; }
+.quarry .quarry-tile .symbol-2 { top: 15%; right: 15%; }
+.quarry .quarry-tile .symbol-3 { bottom: 15%; right: 15%; }
+.quarry .quarry-tile .symbol-4 { bottom: 15%; left: 15%; }
+
+.quarry .quarry-preview {
+    z-index: 100;
+    position: absolute;
+    width: 70%;
+    padding: 10px;
+    left: 102%;
+    border: 2px solid #000;
+    background-color: #000;
+}
+.quarry .quarry-preview .quarry-tile {
+    width:100%;
+}
+.quarry .quarry-preview .quarry-tile:hover {
+    &&::before {
+        opacity: 0;
+    }
+}
+.quarry .quarry-preview .selected-quarry-text {
+    position: absolute;
+    left: 2px;
+    top: 0px;
+    z-index: 101;
+    color: red;
+    text-shadow:
+        1px 1px 0px#fff,
+        -1px -1px 0px#fff,
+        1px -1px 0px#fff,
+        -1px 1px 0px#fff;
+}
