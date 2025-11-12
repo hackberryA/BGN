@@ -29,7 +29,7 @@ module.exports = (env, argv) => {
     },
     plugins: [
       new HtmlWebpackPlugin({ template: './src/client/index.html' }),
-      !isProd && new webpack.HotModuleReplacementPlugin(),
+      // !isProd && new webpack.HotModuleReplacementPlugin(),
     ].filter(Boolean),
     devServer: {
       static: path.join(__dirname, 'public'),
