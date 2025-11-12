@@ -53,7 +53,7 @@ export const SocketProvider: React.FC<Props> = ({ roomId, children}) => {
 
   useEffect(() => {
     const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const host = window.location.protocol === 'https:' ? window.location.host + ":" + process.env.PORT : "localhost:8081"; // ポートも含まれる
+    const host = window.location.protocol === 'https:' ? window.location.host : "localhost:8081";
     // const protocol = 'wss';
     // const host = window.location.host; // ポートも含まれる
     const url = `${protocol}://${host}/ws/room/${roomId}` 
@@ -109,7 +109,7 @@ export const SocketProvider: React.FC<Props> = ({ roomId, children}) => {
 
     //////////////////////////////////////////////////
     ws.onclose = () => { };
-    ws.onerror = () => console.log(`(Socket error?)`);
+    ws.onerror = (e) => console.log(`(Socket error?)`, e);
     setSocket(ws);
     return () => ws.close();
   }, [roomId]);
