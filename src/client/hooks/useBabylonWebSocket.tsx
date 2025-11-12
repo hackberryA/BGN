@@ -56,8 +56,8 @@ export const SocketProvider: React.FC<Props> = ({ roomId, children}) => {
     const host = window.location.protocol === 'https:' ? window.location.host : "localhost:8081";
     // const protocol = 'wss';
     // const host = window.location.host; // ポートも含まれる
-    // const url = `${protocol}://${host}/ws/room/${roomId}` 
-    const url = `${protocol}://${host}` 
+    const url = `${protocol}://${host}/ws/${roomId}` 
+    // const url = `${protocol}://${host}` 
     console.log(url)
     const ws = new WebSocket(url);
     socketRef.current = ws;

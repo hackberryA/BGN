@@ -14,7 +14,7 @@ export class SocketManager {
   constructor(server: any) {
     this.clients = {}
     this.gamedata = {}
-    this.wss = new WebSocketServer({ server, path: "/ws" });
+    this.wss = new WebSocketServer({ server, path: "/ws/room" });
     this.wss.on("connection", (ws) => this.handleConnection(ws));
     logger.log(`🌐 WebSocket server started`);
   }
