@@ -1,4 +1,4 @@
-import { useGLTF } from '@react-three/drei'
+import { useGLTF } from '@react-three/drei/core/Gltf'
 import * as THREE from 'three'
 import { useMemo } from 'react'
 import { ComponentType } from './types';

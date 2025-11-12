@@ -1,6 +1,6 @@
 import { VRMLoaderPlugin, VRMUtils } from "@pixiv/three-vrm";
 import { VRMAnimationLoaderPlugin, createVRMAnimationClip, } from "@pixiv/three-vrm-animation";
-import { OrbitControls } from "@react-three/drei";
+import OrbitControls from '@react-three/drei/core/OrbitControls';
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";

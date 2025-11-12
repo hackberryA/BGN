@@ -1,12 +1,11 @@
-import { OrbitControls } from "@react-three/drei";
+import OrbitControls from '@react-three/drei/core/OrbitControls';
 import { Canvas, useThree } from "@react-three/fiber";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+import { useStorage } from "../../../../hooks/useStorage";
 import { PlayerBoardProps } from "../PlayerBoard";
 import { BabylonCanvasScene } from "./BabylonCanvasScene";
 import { DebugComponents } from "./DebugComponents";
-import { useBabylonWebSocket } from "../../../../hooks/useBabylonWebSocket";
-import { useStorage } from "../../../../hooks/useStorage";
 
 type PlayerInfo = {playerId: string}
 

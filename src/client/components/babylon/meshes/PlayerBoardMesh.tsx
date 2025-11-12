@@ -2,7 +2,7 @@ import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeom
 import { useLoader } from "@react-three/fiber";
 import { useMemo } from "react";
 import * as THREE from "three";
-import { CSG } from "three-csg-ts";
+import * as CSG from "three-csg-ts";
 import { width } from './common';
 import { commonShadow, defaultMaterialParameters } from '../const/mesh';
 

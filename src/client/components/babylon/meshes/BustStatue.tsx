@@ -1,12 +1,11 @@
-import { useLoader, useThree } from "@react-three/fiber";
+import { useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry";
+import { useBabylonWebSocket } from "../../../hooks/useBabylonWebSocket";
 import { height, width } from "./common";
 import { CommonMesh } from "./CommonMesh";
 import { ComponentType } from "./types";
 import { useVRMScene } from "./useVRMScene";
-import { useBabylonWebSocket } from "../../../hooks/useBabylonWebSocket";
-import { OrbitControls } from "@react-three/drei";
 
 export const BustStatue = ({position, direction=0, status="confirmed"}: ComponentType) => {
     

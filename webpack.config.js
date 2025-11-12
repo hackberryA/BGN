@@ -33,6 +33,8 @@ module.exports = (env, argv) => {
     ].filter(Boolean),
     externals: {
       three: 'THREE', // npm の three をバンドルせずに外部の THREE オブジェクトを使う
+      'three-csg-ts': 'ThreeCSG'
+      // import { CSG } from 'three-csg-ts';
     },
     devServer: {
       static: path.join(__dirname, 'public'),
@@ -42,5 +44,10 @@ module.exports = (env, argv) => {
       historyApiFallback: true,
     },
     devtool: isProd ? false : 'inline-source-map',
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+      },
+    },
   };
 };
