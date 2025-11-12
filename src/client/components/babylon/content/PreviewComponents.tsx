@@ -29,7 +29,7 @@ export const PreviewComponents = () => {
         <BustStatue key="pj-7" position="6,0,0" />
 
         {/* ストレージタイル */}
-        <TerraceTile key="pt-8.4,0,0.5" position={"8.4,0,0.5"} status={"storage-0"} 
+        <TerraceTile key="pt-8.4,0,0.5" position={"8.4,0.1,0.5"} status={"storage-0"} 
             tileInfo={{ tileNo: 0, layer: "starting", flower: "red", symbols: ["fountain", "bridge", "statue", "stairway"], display: true, rotate: 0 }} />
         <TerraceTile key="pt-9,0,2.5" position={"9,0,2.5"} status={"storage-1"} 
             tileInfo={{ tileNo: 0, layer: "clay", flower: "red", symbols: ["fountain", "empty", "statue", "empty"], display: true, rotate: 0 }} />

@@ -76,7 +76,7 @@ export const BabylonCanvasComponents = ({playerId, props}: PlayerInfo & {props?:
         {/****************************************************************************************************/}
         {/* ストレージタイル */}
         {Object.keys(playerInfo.storageTiles).length > 0 && 
-            <TerraceTile position={`8.4,0,0.5`} status={"storage-0"} tileInfo={playerInfo.storageTiles[0]} props={props} key={"storage-0"} />}
+            <TerraceTile position={`8.4,0.1,0.5`} status={"storage-0"} tileInfo={playerInfo.storageTiles[0]} props={props} key={"storage-0"} />}
         {Object.keys(playerInfo.storageTiles).length > 1 &&
             <TerraceTile position={`9,0,2.5`} status={"storage-1"} tileInfo={playerInfo.storageTiles[1]} props={props} key={"storage-1"} /> }
 
