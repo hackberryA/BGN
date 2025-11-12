@@ -10,10 +10,10 @@ app.use(express.static("dist/client"));
 app.use(express.static("public"));
 
 const port = process.env.PORT || 8081;
-// const server = http.createServer(app);
+const server = http.createServer(app);
 
 // WebSocket を統合
-const wsService = new SocketManager(app.listen(port));
+const wsService = new SocketManager(server);
 
 // server.listen(port, () => {
 //     console.log(`HTTP server listening on http://localhost:${port}`);
