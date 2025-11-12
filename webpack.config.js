@@ -21,7 +21,10 @@ module.exports = (env, argv) => {
       rules: [
         {
           test: /\.(ts|tsx)$/,
-          use: [{ loader: 'ts-loader', options: { transpileOnly: true } }],
+          use: [{ loader: 'ts-loader', options: { 
+            transpileOnly: true,
+            happyPackMode: true
+          } }],
           exclude: /node_modules/,
         },
         { test: /\.css$/i, use: ['style-loader', 'css-loader'] },
@@ -29,13 +32,13 @@ module.exports = (env, argv) => {
     },
     plugins: [
       new HtmlWebpackPlugin({ template: './src/client/index.html' }),
-      // !isProd && new webpack.HotModuleReplacementPlugin(),
+      !isProd && new webpack.HotModuleReplacementPlugin(),
     ].filter(Boolean),
     devServer: {
       static: path.join(__dirname, 'public'),
       port: 3000,
       hot: true,
-      open: true,
+      open: false,
       historyApiFallback: true,
     },
     devtool: isProd ? false : 'inline-source-map',
