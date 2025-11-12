@@ -1,14 +1,18 @@
 {
   "compilerOptions": {
     "target": "ES6",
-    "module": "ESNext",
+    // "module": "ESNext",
+    "module": "commonjs",
     "moduleResolution": "node",
-    "jsx": "react-jsx",
+    // "ignoreDeprecations": "6.0",
     "strict": true,
+    "jsx": "react-jsx",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist/client"
+    "outDir": "./dist"
   },
-  "include": ["src/client"]
+  "include": ["src", "src/client/components/babylon/js"]
+  
 }
+

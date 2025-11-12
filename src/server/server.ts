@@ -8,7 +8,7 @@ import path from 'path';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// フロントの dist/client を配信
+// 静的ファイル配信（フロントの webpack 出力）
 app.use(express.static(path.join(process.cwd(), 'dist/client')));
 
 app.get('*', (req, res) => {
