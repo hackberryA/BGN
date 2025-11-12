@@ -7,7 +7,7 @@
     "build-client": "webpack --mode production",
     "build-server": "tsc src/server/server.ts --outDir dist/server",
     "build": "npm run build-client && npm run build-server",
-    "start": "npm run build-server && node dist/server/server.js"
+    "start": "npm run build && node dist/server/server.js"
   },
   "dependencies": {
     "@pixiv/three-vrm": "^3.4.2",
