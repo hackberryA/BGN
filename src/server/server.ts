@@ -15,9 +15,9 @@ const port = process.env.PORT || 8081;
 // WebSocket を統合
 const wsService = new SocketManager(app.listen(port));
 
-server.listen(port, () => {
-    console.log(`HTTP server listening on http://localhost:${port}`);
-});
+// server.listen(port, () => {
+//     console.log(`HTTP server listening on http://localhost:${port}`);
+// });
 
 // import express from 'express';
 // import path from 'path';
