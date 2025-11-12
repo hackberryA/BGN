@@ -4,9 +4,9 @@ import { useMemo } from "react";
 import * as THREE from "three";
 import * as CSG from "three-csg-ts";
 import { width } from './common';
-import { commonShadow, defaultMaterialParameters } from '../const/mesh';
+import { commonShadow } from '../const/mesh';
 
-export const PlayerBoardMesh = ({displayGrid}: {displayGrid?: boolean}) => {
+export const PlayerBoardMesh = () => {
   // テクスチャの繰り返し設定など
   const texture = useLoader(THREE.TextureLoader, "/images/babylon/textures/playerBoard.png");
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
