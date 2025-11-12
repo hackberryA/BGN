@@ -2,7 +2,6 @@ import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeom
 import { useLoader } from "@react-three/fiber";
 import { useMemo } from "react";
 import * as THREE from "three";
-import * as CSG from "three-csg-ts";
 import { width } from './common';
 import { commonShadow } from '../const/mesh';
 
@@ -23,7 +22,7 @@ export const PlayerBoardMesh = () => {
   cutMesh.position.set(width * 5, width * 2.5, 0); // どこを削るか調整
   cutMesh.updateMatrix();
   const baseMesh = new THREE.Mesh(geometry);
-  const subtracted = CSG.subtract(baseMesh, cutMesh);
+  // const subtracted = CSG.subtract(baseMesh, cutMesh);
   const CellsMap = []
   for (let x=0;x<8;x++) {
     for (let z=0;z<8;z++) {
@@ -40,7 +39,7 @@ export const PlayerBoardMesh = () => {
       {...commonShadow}
       name="playerBoard"
       userData={{ component: "PLAYER_BOARD" }}
-      geometry={subtracted.geometry}
+      geometry={geometry}
       material={material}
       rotation={[-Math.PI / 2, 0, 0]}
       position={[width * 0.4, -0.1, 0]}

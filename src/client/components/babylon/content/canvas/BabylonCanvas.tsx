@@ -1,4 +1,4 @@
-import OrbitControls from '@react-three/drei/core/OrbitControls';
+import { OrbitControls } from '@react-three/drei/core/OrbitControls';
 import { Canvas, useThree } from "@react-three/fiber";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
