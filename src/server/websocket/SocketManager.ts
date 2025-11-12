@@ -14,7 +14,7 @@ export class SocketManager {
   constructor(server: any) {
     this.clients = {}
     this.gamedata = {}
-    this.wss = new WebSocketServer({ server, path: "/ws/room" });
+    this.wss = new WebSocketServer({ server, path: "/ws" });
     this.wss.on("connection", (ws) => this.handleConnection(ws));
     logger.log(`🌐 WebSocket server started`);
   }
@@ -22,6 +22,9 @@ export class SocketManager {
   /** 接続時設定 */
   private handleConnection(ws: WebSocket) {
     const clientInfo = {gameId: "", roomId: "", userId: "", userName: ""}
+
+    ws.on("connect", ()=> logger.info("connect"))
+    ws.on("error", (e)=> logger.error(e))
 
     // メッセージ受信
     ws.on("message", (raw) => {
