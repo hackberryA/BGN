@@ -9,7 +9,7 @@ module.exports = (env, argv) => {
     mode: isProd ? 'production' : 'development',
     entry: './src/client/main.tsx',
     output: {
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, 'dist/client'),
       filename: 'bundle.js',
       clean: true,
       publicPath: '/',
@@ -21,10 +21,7 @@ module.exports = (env, argv) => {
       rules: [
         {
           test: /\.(ts|tsx)$/,
-          use: [{ loader: 'ts-loader', options: { 
-            transpileOnly: true,
-            happyPackMode: true
-          } }],
+          use: [{ loader: 'ts-loader', options: { transpileOnly: true } }],
           exclude: /node_modules/,
         },
         { test: /\.css$/i, use: ['style-loader', 'css-loader'] },
