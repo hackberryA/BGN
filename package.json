@@ -1,10 +1,11 @@
 {
   "name": "bgn",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "dev": "webpack serve --mode development --open",
-    "build": "NODE_OPTIONS='--max_old_space_size=1024' webpack --mode production --progress --stats-error-details",
-    "start": "npx serve dist"
+    "build-server": "tsc src/server/server.ts --outDir dist/server",
+    "start": "node dist/server/server.js"
   },
   "dependencies": {
     "@pixiv/three-vrm": "^3.4.2",
