@@ -1,6 +1,9 @@
 import { SocketManager } from "./websocket/SocketManager";
-import express from "express";
-import http from "http";
+// import express from "express";
+// import http from "http";
+const express = require("express");
+const http = require("http");
+
 // Express + HTTP サーバー
 const app = express();
 app.use(express.static("dist/client"));
