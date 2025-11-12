@@ -52,12 +52,12 @@ export const SocketProvider: React.FC<Props> = ({ roomId, children}) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
-    const protocol = window.location.protocol === 'https:' ? 'ws' : 'ws';
+    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
     const host = window.location.protocol === 'https:' ? window.location.host : "localhost:8081";
     // const protocol = 'wss';
     // const host = window.location.host; // ポートも含まれる
-    const url = `${protocol}://${host}/ws/${roomId}` 
-    // const url = `${protocol}://${host}` 
+    // const url = `${protocol}://${host}/ws/${roomId}` 
+    const url = `${protocol}://${host}/ws` 
     console.log(url)
     const ws = new WebSocket(url);
     socketRef.current = ws;
