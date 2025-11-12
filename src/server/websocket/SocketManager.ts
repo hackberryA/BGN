@@ -16,7 +16,7 @@ export class SocketManager {
     this.gamedata = {}
     this.wss = new WebSocketServer({ server, path: "/ws" });
     this.wss.on("connection", (ws) => this.handleConnection(ws));
-    logger.log(`🌐 WebSocket server started on ws://localhost:${ENV.PORT}`);
+    logger.log(`🌐 WebSocket server started`);
   }
 
   /** 接続時設定 */
