@@ -31,6 +31,9 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({ template: './src/client/index.html' }),
       !isProd && new webpack.HotModuleReplacementPlugin(),
     ].filter(Boolean),
+    externals: {
+      three: 'THREE', // npm の three をバンドルせずに外部の THREE オブジェクトを使う
+    },
     devServer: {
       static: path.join(__dirname, 'public'),
       port: 3000,
