@@ -5,7 +5,7 @@ import http from "http";
 const app = express();
 app.use(express.static("dist/client"));
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8081;
 const server = http.createServer(app);
 
 // WebSocket を統合
