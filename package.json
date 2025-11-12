@@ -4,7 +4,9 @@
   "scripts": {
     "dev": "webpack serve --mode development --open",
     "dev-server": "ts-node src/server/server.ts",
+    "build-client": "webpack --mode production",
     "build-server": "tsc src/server/server.ts --outDir dist/server",
+    "build": "npm run build-client && npm run build-server",
     "start": "npm run build-server && node dist/server/server.js"
   },
   "dependencies": {
