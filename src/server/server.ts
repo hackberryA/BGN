@@ -15,7 +15,7 @@ const server = http.createServer(app);
 const wsService = new SocketManager(server);
 
 server.listen(port, () => {
-  console.log(`HTTP server listening on http://localhost:${port}`);
+    console.log(`HTTP server listening on http://localhost:${port}`);
 });
 
 // import express from 'express';

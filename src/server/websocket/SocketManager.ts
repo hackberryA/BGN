@@ -12,7 +12,6 @@ export class SocketManager {
 
   /** WebSocketServer コンストラクタ */
   constructor(server: any) {
-    this.wss = new WebSocketServer({ port: ENV.PORT });
     this.clients = {}
     this.gamedata = {}
     this.wss = new WebSocketServer({ server, path: "/ws" });
