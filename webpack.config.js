@@ -10,7 +10,7 @@ module.exports = (env, argv) => {
     entry: './src/client/main.tsx',
     output: {
       path: path.resolve(__dirname, 'dist/client'),
-      filename: 'bundle.js',
+      filename: '[name].[contenthash].js', // ← チャンクごとに固有名
       clean: true,
       publicPath: '/',
     },
