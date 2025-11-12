@@ -9,7 +9,7 @@ import { ComponentType } from "./types";
 
 export function DoublePillar({position, status }: ComponentType) {
   const [x,y,z] = position.split(",").map(Number);
-  const {send} = useBabylonWebSocket()
+  const {send, currentPlayerInfo: playerInfo} = useBabylonWebSocket()
 
   const normalMap = useLoader(THREE.TextureLoader, "/images/babylon/textures/wall-map.png");
 
@@ -62,6 +62,8 @@ export function DoublePillar({position, status }: ComponentType) {
   // クリック時
   const handleClick = (e: any) => {
     e.stopPropagation();
+    if (!playerInfo) return
+    if (playerInfo.selectTarget !== "pillar") return;
     const mesh = e.object;
     if (mesh.parent) {
       mesh.parent.remove(mesh);
