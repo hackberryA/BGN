@@ -4,7 +4,6 @@ import { BabylonDataType } from "../types/BabylonTypes";
 import { getCurrentTime } from "../utils/CommonUtils";
 import { logger } from "../utils/logger";
 import { handleBabylonMessage } from "./handler/BabylonMessageHandler";
-import http from "http";
 
 export class SocketManager {
   private wss: WebSocketServer;
@@ -12,7 +11,7 @@ export class SocketManager {
   public gamedata: { [roomId: string]: BabylonDataType };
 
   /** WebSocketServer コンストラクタ */
-  constructor(server: http.Server) {
+  constructor(server: any) {
     this.wss = new WebSocketServer({ port: ENV.PORT });
     this.clients = {}
     this.gamedata = {}
