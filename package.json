@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "webpack serve --mode development --open",
-    "build": "webpack --mode production --progress --stats-error-details",
+    "build": "npm ci --verbose && webpack --mode production --progress --stats-error-details",
     "start": "npx serve dist"
   },
   "dependencies": {
