@@ -7,6 +7,7 @@ const http = require("http");
 // Express + HTTP サーバー
 const app = express();
 app.use(express.static("dist/client"));
+app.use(express.static("public"));
 
 const port = process.env.PORT || 8081;
 const server = http.createServer(app);
