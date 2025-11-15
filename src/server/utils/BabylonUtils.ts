@@ -274,6 +274,7 @@ export const getPlacableDecoration = (
         const ret = checkDecoration(x, y, z, info.symbols[0], tileMap, componentMap)
         ret.forEach(([pos, info]: any) => result[pos] = info)
     })
+    logger.error("PlacableDecoration=", result)
     return result
 }
 const checkDecoration = (x: number, y: number, z: number, symbol: SymbolType, 
@@ -369,15 +370,20 @@ const checkBridge = (x: number, y: number, z: number, tileMap: {[pos: string]: T
 }
 // 彫像
 const checkStatue = (x: number, y: number, z: number, tileMap: {[pos: string]: TerraceTileInfo}, componentMap: { [k: string]: ComponentType; }) => {
+    // 彫像が存在する座標リスト
     const statuePosList = Object.entries(componentMap).filter(([pos,info])=>{
+        // 彫像でなければfalse
         if (info.symbol !== "statue") return false
+        // 彫像より上にタイルがある場合はfalse
         const [x,y,z] = pos.split(",").map(Number)
         for (let h=y+1; h<15; h++) {
-            if (`${x},${h},${z}` in tileMap) return null
+            if (`${x},${h},${z}` in tileMap) return false
         }
         return true
     }).map(([pos,_])=>pos)
+    // x座標リスト
     const xList = statuePosList.map((pos) => pos.split(",").map(Number)[0])
+    // z座標リスト
     const zList = statuePosList.map((pos) => pos.split(",").map(Number)[2])
     logger.error("xList=", xList)
     logger.error("zList=", zList)
@@ -400,7 +406,8 @@ const checkStatue = (x: number, y: number, z: number, tileMap: {[pos: string]: T
         return [`${key},${d}`, {direction: d, symbol: "statue" as SymbolType, display: true, objectNo: 0}]
     }
     ret.push(check(x,y,z,0))
-    logger.error("ret=", ret)
+    logger.error("ret=", ret )
+    logger.error("filter=", ret.filter(v=>v!==null) )
     return ret.filter(v=>v!==null)  
 }
 

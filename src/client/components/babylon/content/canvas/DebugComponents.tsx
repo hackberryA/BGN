@@ -171,14 +171,13 @@ export const DebugComponents = ({playerId}: PlayerInfo) => {
                     return null
                 case "statue":{
                     // 選択中の他の彫像がある場合、ルールを確認する
-                        const statueLength = confirmedComponent.filter(([_, info]) => info.symbol === "statue").length;
-                        const statueList = selectedComponent.filter(([_, info]) => info.symbol === "statue").map(([pos, _]) => pos.split(",").map(Number));
+                        const selectedList = selectedComponent.filter(([_, info]) => info.symbol === "statue").map(([pos, _]) => pos.split(",").map(Number));
                         const [x,y,z] = pos.split(",").map(Number)
-                        if (statueLength === 0 && statueList.length === 0) {
+                        if (selectedList.length === 0) {
                             return <DebugBox position={pos} key={`debug-statue-${pos}`} symbol={"statue"}/>
                         }
-                        for (let i=0;i<statueList.length;i++) {
-                            const [dx, _, dz] = statueList[i]
+                        for (let i=0;i<selectedList.length;i++) {
+                            const [dx, _, dz] = selectedList[i]
                             if (x === dx || z === dz) {
                                 return <DebugBox position={pos} key={`debug-statue-${pos}`} symbol={"statue"}/>
                             }

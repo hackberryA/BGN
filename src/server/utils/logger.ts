@@ -10,6 +10,7 @@ export const logger = {
   
   // バビロンのデータを出力
   logBabylonData: (data: BabylonDataType) => {
+    return
     try {
       console.log("////////////////////////////////////////////////////////////")
       console.log("[*** Room Info ***]")

@@ -139,10 +139,9 @@ export const BabylonCanvasComponents = ({playerId, props}: PlayerInfo & {props?:
                     return <Bridge position={pos} direction={info.direction} key={`bridge-${pos}`} status="preview" />
                 case "statue": {
                     // 選択中の他の彫像がある場合、ルールを確認する
-                        const statueLength = confirmedComponent.filter(([_, info]) => info.symbol === "statue").length;
                         const statueList = selectedComponent.filter(([_, info]) => info.symbol === "statue").map(([pos, _]) => pos.split(",").map(Number));
                         const [x,y,z] = pos.split(",").map(Number)
-                        if (statueLength === 0 && statueList.length === 0) {
+                        if (statueList.length === 0) {
                             return <BustStatue position={pos} direction={info.direction} key={`statue-${pos}`} status="preview" />
                         }
                         for (let i=0;i<statueList.length;i++) {
